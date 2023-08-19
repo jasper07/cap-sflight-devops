@@ -1,0 +1,174 @@
+name: cap-sflight-devops
+resources:
+  containers:
+  - container: cfcli
+    image: 'ppiper/cf-cli'
+    options: --user 0:0 --privileged
+trigger:
+- main
+ 
+stages:
+# - stage: Build
+#   displayName: Build MTA for SAP Cloud Platform
+#   jobs:
+#     - job: build
+#       pool:
+#         vmImage: 'ubuntu-latest'
+#       steps:   
+#         - task: NodeTool@0
+#           inputs:
+#             versionSpec: '18.x'
+#           displayName: 'Install Node.js'
+#         - script: npm install
+#           displayName: NPM install
+#         - script: npm run lint
+#           displayName: Lint check all code     
+#         - script: npm run test:ci 
+#           displayName: Run Unit tests
+#         - script: npm run test:ci 
+#           workingDirectory: $(System.DefaultWorkingDirectory)/app/travel_processor
+#           displayName: Run integration tests - Manage Travels
+#         - script: npm run test:ci 
+#           workingDirectory: $(System.DefaultWorkingDirectory)/app/travel_analytics
+#           displayName: Run integration tests - Analyze Bookings
+
+#         - script: npm run build:cf:sqlite
+#           displayName: Build MTA
+#         - publish: $(System.DefaultWorkingDirectory)/mta_archives/.
+#           artifact: WebApp
+
+#         - task: PublishCodeCoverageResults@1
+#           displayName: Publish Code Coverage Results
+#           inputs:
+#             codeCoverageTool: Cobertura
+#             summaryFileLocation: $(System.DefaultWorkingDirectory)/test-results/coverage/cobertura-coverage.xml
+
+#         - task: PublishTestResults@2
+#           displayName: Publish Test Results
+#           inputs:
+#             testResultsFormat: "JUnit"
+#             testResultsFiles: '**/TEST-*.xml'
+#             mergeTestResults: false
+        
+        
+
+        # # This task is how the "Scans" tab in our Azure Pipelines build results page gets its data. It requires using
+        # # PublishBuildArtifacts rather than the newer PublishPipelineArtifacts.
+
+              
+# - stage: Deploy
+#   displayName: Deploy to SAP Cloud Platform
+#   jobs:
+#     - job: deploy
+#       pool:
+#         vmImage: 'ubuntu-latest'
+#       container: cfcli
+#       steps:
+#         - download: current
+#           artifact: WebApp
+#         - bash: |
+#                   cf login -u "$(CF-USER)" -p "$(CF-PASSWORD)" -a "$(CF-API)" -o "$(CF-ORG)" -s "$(CF-SPACE)"
+#                   cf deploy $(Pipeline.Workspace)/WebApp/hello-world.mtar -f
+
+
+# see the following for whats in the windows agent https://github.com/actions/runner-images/blob/main/images/win/Windows2022-Readme.md
+# - stage: E2E_tests
+#   displayName: E2E tests
+#   jobs:
+#     - job: test
+#       pool:
+#         vmImage: 'windows-latest'
+#       steps:   
+#         - task: NodeTool@0
+#           inputs:
+#             versionSpec: '18.x'
+#           displayName: 'Install Node.js'
+#         - script: npm install
+#           displayName: NPM install
+#         - script: npm run test:wdi5:headless
+#           env:
+#             wdi5_username: $(wdi5_username)
+#             wdi5_password: $(wdi5_password)
+#             BASE_URL: $(BASE_URL)
+#           displayName: WDi5 test run in headless
+          
+        # - task: PublishHtmlReport@1
+        #   condition: succeededOrFailed()
+        #   inputs:
+        #     reportDir: ' $(System.DefaultWorkingDirectory)/test-results/e2e/timeline-report.html'
+        #     tabName: 'WDI5'
+
+
+# - stage: Compliance
+#   displayName: Build MTA for SAP Cloud Platform
+#   jobs:
+#     - job: Compliance
+#       pool:
+#           vmImage: 'ubuntu-latest'
+#       steps:   
+#             - script: npm run sast
+#               displayName: Run code security checks  (SAST & SCA)   
+#             - task: PublishBuildArtifacts@1
+#               displayName: publish sarif results
+#               inputs:
+#                 # The exact name "CodeAnalysisLogs" is required for the Sarif Results Viewer Extension for Azure Pipelines
+#                 # to find the .sarif files our accessibility test produces.
+#                 artifactName: "CodeAnalysisLogs"
+#                 # "test-results" is not a required convention; it just happens to be where our tests write .sarif files to.
+#                 pathtoPublish: "$(Build.SourcesDirectory)/test-results"
+#               condition: succeededOrFailed()
+
+  # displayName: Run SonarCloud
+  # jobs:
+  #   - job: SonarCloudValidation
+  #     pool:
+  #       vmImage: 'ubuntu-latest'
+  #     steps:
+  #       - task: SonarCloudPrepare@1
+            # displayName: Prepare SonarCloud analysis configuration
+            # condition: and(succeeded())
+  #         inputs:
+  #           SonarCloud: 'Sonar Cloud'
+  #           organization: 'iesteras'
+  #           scannerMode: 'CLI'
+  #           configMode: 'manual'
+  #           cliProjectKey: 'iesteras_TestingSapui5Public'
+  #           cliProjectName: 'TestingSapui5Public'
+  #           cliSources: '.'
+  #       - task: SonarCloudAnalyze@1
+  #           displayName: "Run Code Analysis"
+  #       - task: SonarCloudPublish@1
+  #         displayName: "Publish Quality Gate Result"
+  #         inputs:
+  #           pollingTimeoutSec: '300'
+
+
+# - stage: Upload
+#   variables:
+#    - group: ctms-variables
+#   displayName: Upload to CTMS
+    # dependsOn:
+    # - E2E_tests
+#   jobs:
+#     - job: upload
+#       pool:
+#         vmImage: 'ubuntu-latest'
+#       steps: 
+#         - checkout: uploadtoctms
+#         - download: current
+#           artifact: WebApp    
+#         - task: NodeTool@0
+#           inputs:
+#             versionSpec: '16.x'
+#           displayName: 'Install Node.js' 
+#         - script:  npm install && npm run upload "$(Pipeline.Workspace)/WebApp/hello-world.mtar"
+#           env:
+#             TMS_API: $(TMS_API)
+#             TOKEN_URL: $(TOKEN_URL)
+#             CTMS_NODE: $(CTMS_NODE_MTA_QA)
+#             CLIENT_ID : $(CLIENT_ID) 
+#             CLIENT_SECRET: $(CLIENT_SECRET)
+#             USER_NAME: $(Build.RequestedForEmail)
+#             DESCRIPTION: "$(Build.DefinitionName): $(Build.SourceVersionMessage)"
+#           displayName: Upload to CTMS
+
