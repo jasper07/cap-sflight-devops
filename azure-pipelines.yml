@@ -35,11 +35,10 @@ stages:
       steps: 
       - script: echo Compliance
 
-
- - stage: Release
+- stage: Release
   displayName: Upload to TMS queue
   dependsOn: 
-  - Compliance
+   - Compliance
   jobs:
     - job: release
       steps: 
