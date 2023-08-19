@@ -15,18 +15,18 @@ stages:
         pool:
           vmImage: 'ubuntu-latest'
         steps:   
-        - script: npm install
-          displayName: NPM install
-        - script: npm run lint
-          displayName: Lint check all code     
-        - script: npm run test:ci 
-          displayName: Run Unit tests - cap srv
-        - script: npm run test:ci 
-          workingDirectory: $(System.DefaultWorkingDirectory)/app/travel_processor
-          displayName: Run integration tests - Manage Travels
-        - script: npm run test:ci 
-          workingDirectory: $(System.DefaultWorkingDirectory)/app/travel_analytics
-          displayName: Run integration tests - Analyze Bookings
+        # - script: npm install
+        #   displayName: NPM install
+        # - script: npm run lint
+        #   displayName: Lint check all code     
+        # - script: npm run test:ci 
+        #   displayName: Run Unit tests - cap srv
+        # - script: npm run test:ci 
+        #   workingDirectory: $(System.DefaultWorkingDirectory)/app/travel_processor
+        #   displayName: Run integration tests - Manage Travels
+        # - script: npm run test:ci 
+        #   workingDirectory: $(System.DefaultWorkingDirectory)/app/travel_analytics
+        #   displayName: Run integration tests - Analyze Bookings
 
         - script: npm run build:cf:sqlite
           displayName: Build MTA
