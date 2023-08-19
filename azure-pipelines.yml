@@ -12,8 +12,40 @@ stages:
     displayName: Build MTA for SAP Cloud Platform
     jobs:
       - job: build
-        steps:
-          - script: echo Build
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:   
+        - script: npm install
+          displayName: NPM install
+        - script: npm run lint
+          displayName: Lint check all code     
+        - script: npm run test:ci 
+          displayName: Run Unit tests - cap srv
+        - script: npm run test:ci 
+          workingDirectory: $(System.DefaultWorkingDirectory)/app/travel_processor
+          displayName: Run integration tests - Manage Travels
+        - script: npm run test:ci 
+          workingDirectory: $(System.DefaultWorkingDirectory)/app/travel_analytics
+          displayName: Run integration tests - Analyze Bookings
+
+        - script: npm run build:cf:sqlite
+          displayName: Build MTA
+        - publish: $(System.DefaultWorkingDirectory)/mta_archives/.
+          artifact: WebApp
+
+        - task: PublishCodeCoverageResults@1
+          displayName: Publish Code Coverage Results
+          inputs:
+            codeCoverageTool: Cobertura
+            summaryFileLocation: $(System.DefaultWorkingDirectory)/test-results/coverage/cobertura-coverage.xml
+
+        - task: PublishTestResults@2
+          displayName: Publish Test Results
+          inputs:
+            testResultsFormat: "JUnit"
+            testResultsFiles: '**/TEST-*.xml'
+            mergeTestResults: false
+
 
   - stage: Acceptance
     displayName: Deploy and Test
