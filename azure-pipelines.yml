@@ -1,48 +1,49 @@
 name: cap-sflight-devops
 resources:
   containers:
-  - container: cfcli
-    image: 'ppiper/cf-cli'
-    options: --user 0:0 --privileged
+    - container: cfcli
+      image: "ppiper/cf-cli"
+      options: --user 0:0 --privileged
 trigger:
-- main
+  - main
 
 stages:
-- stage: Build
-  displayName: Build MTA for SAP Cloud Platform
-  jobs:
-    - job: build
-      steps: 
-      - script: echo Build 
+  - stage: Build
+    displayName: Build MTA for SAP Cloud Platform
+    jobs:
+      - job: build
+        steps:
+          - script: echo Build
 
-- stage: Acceptance
-  displayName: Deploy and Test
-  dependsOn: 
-  - Build
-  jobs:
-    - job: acceptance
-      steps: 
-      - checkout: none
-        script: echo Acceptance
+  - stage: Acceptance
+    displayName: Deploy and Test
+    condition: "false"
+    dependsOn:
+      - Build
+    jobs:
+      - job: acceptance
+        steps:
+          - checkout: none
+          - script: echo Acceptance
 
+  - stage: Compliance
+    displayName: Scan for vulnerabilities
+    dependsOn:
+      - Acceptance
+    jobs:
+      - job: compliance
+        steps:
+          - checkout: none
+          - enabled: "false"
+          - script: echo Compliance
 
-- stage: Compliance
-  displayName: Scan for vulnerabilities
-  condition: false
-  dependsOn: 
-  - Acceptance
-  jobs:
-    - job: compliance
-      steps: 
-      - checkout: none
-        script: echo Compliance
-
-- stage: Release
-  displayName: Upload to TMS queue
-  dependsOn: 
-   - Compliance
-  jobs:
-    - job: release
-      steps: 
-      - checkout: none
-        script: echo Release
+  - stage: Release
+    displayName: Upload to TMS queue
+    dependsOn:
+      - Compliance
+    jobs:
+      - job: release
+        steps:
+          - checkout: none
+          - enabled: "false"
+          - script: echo Release
