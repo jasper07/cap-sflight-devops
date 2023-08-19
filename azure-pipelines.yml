@@ -34,7 +34,6 @@ stages:
       - job: compliance
         steps:
           - checkout: none
-          - enabled: "false"
           - script: echo Compliance
 
   - stage: Release
@@ -45,5 +44,4 @@ stages:
       - job: release
         steps:
           - checkout: none
-          - enabled: "false"
           - script: echo Release
