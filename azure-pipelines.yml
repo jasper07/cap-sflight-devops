@@ -85,6 +85,8 @@ stages:
           vmImage: "ubuntu-latest"
         steps:
           - checkout: self
+          - script: npm install
+            displayName: NPM install
           - download: current
             artifact: WebApp
           - script: npm run ctmsupload
