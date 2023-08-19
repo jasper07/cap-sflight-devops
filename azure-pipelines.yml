@@ -15,8 +15,8 @@ stages:
         pool:
           vmImage: 'ubuntu-latest'
         steps:   
-        # - script: npm install
-        #   displayName: NPM install
+        - script: npm install
+          displayName: NPM install
         # - script: npm run lint
         #   displayName: Lint check all code     
         # - script: npm run test:ci 
@@ -35,18 +35,18 @@ stages:
           artifact: WebApp
           displayName: 'Publish archive folder'
 
-        - task: PublishCodeCoverageResults@1
-          displayName: Publish Code Coverage Results
-          inputs:
-            codeCoverageTool: Cobertura
-            summaryFileLocation: $(System.DefaultWorkingDirectory)/test-results/coverage/cobertura-coverage.xml
+        # - task: PublishCodeCoverageResults@1
+        #   displayName: Publish Code Coverage Results
+        #   inputs:
+        #     codeCoverageTool: Cobertura
+        #     summaryFileLocation: $(System.DefaultWorkingDirectory)/test-results/coverage/cobertura-coverage.xml
 
-        - task: PublishTestResults@2
-          displayName: Publish Test Results
-          inputs:
-            testResultsFormat: "JUnit"
-            testResultsFiles: '**/TEST-*.xml'
-            mergeTestResults: false
+        # - task: PublishTestResults@2
+        #   displayName: Publish Test Results
+        #   inputs:
+        #     testResultsFormat: "JUnit"
+        #     testResultsFiles: '**/TEST-*.xml'
+        #     mergeTestResults: false
 
 
   - stage: Acceptance
