@@ -23,6 +23,7 @@ stages:
     - job: acceptance
       steps: 
       - checkout: none
+      - enabled: false
       - script: echo Acceptance
 
 
@@ -34,6 +35,7 @@ stages:
     - job: compliance
       steps: 
       - checkout: none
+      - enabled: false
       - script: echo Compliance
 
 - stage: Release
