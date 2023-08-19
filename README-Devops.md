@@ -26,3 +26,12 @@ use command build:cf:sqlite to build and run the app using sqllite
 - make upload dependent on E2E tests
 - add husky tasks
 - azure test plans https://webdriver.io/docs/gmangiapelo-wdio-azure-devops-service/
+
+
+npm install
+
+npm lint
+- uses the lint settings
+
+npm run test:ci 
+ - highlight the reporting settings in karma
