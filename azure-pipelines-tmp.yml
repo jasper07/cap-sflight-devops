@@ -12,21 +12,36 @@ stages:
     displayName: Build MTA for SAP Cloud Platform
     jobs:
       - job: build
-        steps:
-             - script: npm install
-#           displayName: NPM install
+        pool:
+          vmImage: 'ubuntu-latest'
+        steps:   
+        - script: npm install
+          displayName: NPM install
+
+        - script: npm run build:cf:sqlite
+          displayName: Build MTA
+
+        - publish: $(System.DefaultWorkingDirectory)/mta_archives/.
+          artifact: WebApp
+          displayName: 'Publish archive folder'
 
   - stage: Acceptance
     displayName: Deploy and Test
-    condition: "false"
     dependsOn:
       - Build
     jobs:
-      - job: acceptance
-        steps:
-          - checkout: none
-          - script: echo Acceptance
-
+    - job: deploy
+      pool:
+        vmImage: 'ubuntu-latest'
+      container: cfcli
+      steps:
+        - checkout: none
+        - download: current
+          artifact: WebApp
+        - bash: |
+                  cf login -u "$(CF-USER)" -p "$(CF-PASSWORD)" -a "$(CF-API)" -o "$(CF-ORG)" -s "$(CF-SPACE)"
+                  cf deploy $(Pipeline.Workspace)/WebApp/*.mtar -f
+                  
   - stage: Compliance
     displayName: Scan for vulnerabilities
     dependsOn:

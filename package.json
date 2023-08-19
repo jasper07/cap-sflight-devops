@@ -22,7 +22,8 @@
     "build:cf:node": "cp mta-node.yaml mta.yaml && mbt build && rm mta.yaml",
     "build:cf:java": "cp mta-java.yaml mta.yaml && mbt build && rm mta.yaml",
     "build:cf:sqlite": "cp mta-sqlite.yaml mta.yaml && mbt build && rm mta.yaml",
-    "wdi5": "wdio run ./wdio.conf.js"
+    "wdi5": "wdio run ./wdio.conf.js",
+    "ctmsupload": "node ctmsUpload.js"
   },
   "dependencies": {
     "@sap/cds": ">=6.7.0",
