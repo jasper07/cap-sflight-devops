@@ -13,7 +13,7 @@ stages:
   jobs:
     - job: build
       steps: 
-      - script: echo Build
+      - script: echo Build 
 
 - stage: Acceptance
   displayName: Deploy and Test
