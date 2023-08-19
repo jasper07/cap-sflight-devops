@@ -23,8 +23,8 @@ stages:
     - job: acceptance
       steps: 
       - checkout: none
-      - enabled: false
-      - script: echo Acceptance
+        enabled: false
+        script: echo Acceptance
 
 
 - stage: Compliance
@@ -35,8 +35,8 @@ stages:
     - job: compliance
       steps: 
       - checkout: none
-      - enabled: false
-      - script: echo Compliance
+        enabled: false
+        script: echo Compliance
 
 - stage: Release
   displayName: Upload to TMS queue
@@ -46,4 +46,4 @@ stages:
     - job: release
       steps: 
       - checkout: none
-      - script: echo Release
+        script: echo Release
