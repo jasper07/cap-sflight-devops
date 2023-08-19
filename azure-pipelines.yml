@@ -13,31 +13,32 @@ stages:
   jobs:
     - job: build
       steps: 
-        
+      - script: echo hello
 
 
-- stage: Acceptance
-  displayName: Build MTA for SAP Cloud Platform
-#   jobs:
-#     - job: build
-#       pool:
-#         vmImage: 'ubuntu-latest'
-#       steps:  
+
+# - stage: Acceptance
+#   displayName: Build MTA for SAP Cloud Platform
+# #   jobs:
+# #     - job: build
+# #       pool:
+# #         vmImage: 'ubuntu-latest'
+# #       steps:  
 
 
-- stage: Compliance
-  displayName: Build MTA for SAP Cloud Platform
-#   jobs:
-#     - job: build
-#       pool:
-#         vmImage: 'ubuntu-latest'
-#       steps:  
+# - stage: Compliance
+#   displayName: Build MTA for SAP Cloud Platform
+# #   jobs:
+# #     - job: build
+# #       pool:
+# #         vmImage: 'ubuntu-latest'
+# #       steps:  
 
 
-- stage: Release
-  displayName: Build MTA for SAP Cloud Platform
-#   jobs:
-#     - job: build
-#       pool:
-#         vmImage: 'ubuntu-latest'
-#       steps:  
+# - stage: Release
+#   displayName: Build MTA for SAP Cloud Platform
+# #   jobs:
+# #     - job: build
+# #       pool:
+# #         vmImage: 'ubuntu-latest'
+# #       steps:  
