@@ -23,6 +23,8 @@ stages:
             displayName: "Publish archive folder"
   - stage: Deploy
     displayName: Deploy 
+    variables:
+    - group: cloudfoundry-variables
     dependsOn:
       - Build
     jobs:
