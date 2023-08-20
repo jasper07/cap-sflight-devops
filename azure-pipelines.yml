@@ -20,7 +20,7 @@ stages:
           - script: npm run lint
             displayName: Lint check all code
 
-          - script: npm run test
+          - script: npm run test -- --watchAll=false --reporters=default --reporters=jest-junit --coverage --coverageReporters=cobertura
             displayName: Run Unit tests - with junit and coverage results
 
           - bash: |
