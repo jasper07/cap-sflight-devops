@@ -77,7 +77,7 @@ stages:
   - stage: Compliance
     displayName: Scan for vulnerabilities
     dependsOn:
-      - Acceptance
+      - Build
     jobs:
       - job: compliance
         steps:
