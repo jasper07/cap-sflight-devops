@@ -20,8 +20,8 @@ stages:
           - script: npm run lint
             displayName: Lint check all code
 
-          - script: npm run test:ci
-            displayName: Run Unit tests - cap srv
+          - script: npm run test
+            displayName: Run Unit tests - with junit and coverage results
 
           - bash: |
               npm ci
