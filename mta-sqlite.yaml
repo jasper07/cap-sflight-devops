@@ -12,7 +12,7 @@ build-parameters:
       commands:
         # set 'CDS_ENV=node' to pick the 'node' build profile settings, defined in package.json
         - npx -p @sap/cds-dk cds build --profile production,node
-        - npx -p @sap/cds-dk cds deploy
+        - npx -p @sap/cds-dk cds deploy --to sqlite:db.sqlite
         - cp db.sqlite gen/srv
         - rm db.sqlite
 
