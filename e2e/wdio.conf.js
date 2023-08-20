@@ -1,18 +1,16 @@
-const { TimelineService } = require('wdio-timeline-reporter/timeline-service');
-
 exports.config = {
     // ====================
     // wdi5 Configuration
     // ====================
     //
-    wdi5: {
-        // screenshotPath: require("path").join("some", "dir", "for", "screenshots"),c // [optional] {string}, default: ""
-        // screenshotsDisabled: false, // [optional] {boolean}, default: false; if set to true, screenshots won't be taken and not written to file system
-        // logLevel: "verbose", // [optional] error | verbose | silent, default: "error"
-        // skipInjectUI5OnStart: true, // [optional] {boolean}, default: false; true when UI5 is not on the start page, you need to later call <wdioUI5service>.injectUI5() manually
-        waitForUI5Timeout: 30000 // [optional] {number}, default: 15000; maximum waiting time in milliseconds while checking for UI5 availability
-    },
-
+    // wdi5: {
+    //     screenshotPath: require("path").join("some", "dir", "for", "screenshots"),c // [optional] {string}, default: ""
+    //     screenshotsDisabled: false, // [optional] {boolean}, default: false; if set to true, screenshots won't be taken and not written to file system
+    //     logLevel: "error", // [optional] error | verbose | silent, default: "error"
+    //     skipInjectUI5OnStart: false, // [optional] {boolean}, default: false; true when UI5 is not on the start page, you need to later call <wdioUI5service>.injectUI5() manually
+    //     waitForUI5Timeout: 15000 // [optional] {number}, default: 15000; maximum waiting time in milliseconds while checking for UI5 availability
+    // },
+    //
     // ====================
     // Runner Configuration
     // ====================
@@ -33,7 +31,7 @@ exports.config = {
     // then the current working directory is where your `package.json` resides, so `wdio`
     // will be called from there.
     //
-    specs: ["app/travel_processor/webapp/test/**/*.test.js"],
+    specs: ["./webapp/test/**/*.test.js"],
     // Patterns to exclude.
     exclude: [
         // 'path/to/excluded/files'
@@ -61,14 +59,6 @@ exports.config = {
     // https://saucelabs.com/platform/platform-configurator
     //
     capabilities: [
-        // {
-        //     maxInstances: 1,
-        //     browserName: "edge",
-        //     acceptInsecureCerts: true,
-        //     "wdi5:authentication": {
-        //         provider: "BTP",
-        //     }
-        // }
         {
             // maxInstances can get overwritten per capability. So if you have an in-house Selenium
             // grid with only 5 firefox instances available you can make sure that not more than
@@ -79,21 +69,17 @@ exports.config = {
             "goog:chromeOptions": {
                 args:
                     process.argv.indexOf("--headless") > -1
-                        ? ["--headless", "user-agent=...","--disable-gpu","--window-size=1440,800"]
+                        ? ["--headless"]
                         : process.argv.indexOf("--debug") > -1
-                            ? ["window-size=1440,800", "--auto-open-devtools-for-tabs"]
-                            : ["window-size=1440,800"]
+                        ? ["window-size=1440,800", "--auto-open-devtools-for-tabs"]
+                        : ["window-size=1440,800"]
             },
-            acceptInsecureCerts: true,
-            "wdi5:authentication": {
-                provider: "BTP",
-            }
+            acceptInsecureCerts: true
             // If outputDir is provided WebdriverIO can capture driver session logs
             // it is possible to configure which logTypes to include/exclude.
             // excludeDriverLogs: ['*'], // pass '*' to exclude all driver session logs
             // excludeDriverLogs: ['bugreport', 'server'],
         }
-
     ],
     //
     // ===================
@@ -126,10 +112,10 @@ exports.config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: process.env.BASE_URL,
+    baseUrl: "http://localhost:8080/index.html",
     //
     // Default timeout for all waitFor* commands.
-    waitforTimeout: 20000,
+    waitforTimeout: 10000,
     //
     // Default timeout in milliseconds for request
     // if browser driver or grid doesn't send response
@@ -143,11 +129,7 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ["chromedriver",
-        //"edgedriver",//
-        "ui5",
-         [TimelineService]
-    ],
+    services: ["chromedriver", "ui5"],
 
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
@@ -169,21 +151,15 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ['spec',
-        ['timeline', {
-            outputDir: './test-results/e2e', embedImages: true, images: {
-                quality: 80, resize: false, reductionRatio: 2
-            }, screenshotStrategy: 'before:click'
-        }]
-    ],
+    reporters: ["spec"],
 
     //
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/
     mochaOpts: {
         ui: "bdd",
-        timeout: process.argv.indexOf("--debug") > -1 ? 600000 : 600000
-    },
+        timeout: process.argv.indexOf("--debug") > -1 ? 600000 : 60000
+    }
     //
     // =====
     // Hooks
@@ -236,15 +212,8 @@ exports.config = {
      * @param {Array.<String>} specs        List of spec file paths that are to be run
      * @param {Object}         browser      instance of created browser/device session
      */
-    // before: async function (capabilities, specs, browser) {
-    //     console.log("//> PRE cookie set!")
-    //     await browser.setCookies({
-    //         name: 'skipPasswordlessAuthnDeviceConfig',
-    //         value: 'true',
-    //         domain: 'aqywyhweh.accounts.ondemand.com'
-    //     })
-    //     console.log("//> POST cookie set!")
-    // }
+    // before: function (capabilities, specs) {
+    // },
     /**
      * Runs before a WebdriverIO command gets executed.
      * @param {String} commandName hook command name

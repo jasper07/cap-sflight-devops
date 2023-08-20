@@ -20,12 +20,16 @@ module.exports = async (config) => {
     proxies: {
       "/base/webapp/processor": "/processor",
     },
-    reporters: config.ci ? ['progress', 'junit'] : ["progress"],
+    reporters: config.ci ? ['progress', 'junit', 'coverage'] : ["progress"],
     junitReporter: {
       outputDir: '"../../../../test-results/junit',
       outputFile: 'TEST-travel_processor.xml',
       suite: '',
-      useBrowserName: false
+      useBrowserName: true
+    },
+    coverageReporter: {
+      type: 'html',
+      dir: '../../../../test-results/coverage'
     },
     ui5: {
       failOnEmptyTestPage: true,

@@ -20,15 +20,19 @@ module.exports = async (config) => {
     proxies: {
       "/base/webapp/analytics": "/analytics",
     },
-    ui5: {
-      failOnEmptyTestPage: true,
-    },
-    reporters: config.ci ? ['progress', 'junit'] : ["progress"],
+    reporters: config.ci ? ['progress', 'junit', 'coverage'] : ["progress"],
     junitReporter: {
       outputDir: '"../../../../test-results/junit',
-      outputFile: 'TEST-travel_analytics.xml',
+      outputFile: 'TEST-travel_processor.xml',
       suite: '',
-      useBrowserName: false
+      useBrowserName: true
+    },
+    coverageReporter: {
+      type: 'html',
+      dir: '../../../../test-results/coverage'
+    },
+    ui5: {
+      failOnEmptyTestPage: true,
     },
     plugins: [...config.plugins, await capMiddleware],
     middleware: ["cap-proxy"],

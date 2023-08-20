@@ -6,7 +6,6 @@ default-*.json
 schema.sql
 gen/
 node_modules/
-node_modules
 target/
 .reloadtrigger
 
@@ -55,7 +54,6 @@ dist/
 xxx_*
 xxx/*
 
-#ci
-test-results/
-node_modules/
 
+test-results
+*.sqlite
