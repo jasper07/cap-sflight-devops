@@ -112,7 +112,7 @@ const uploadFileToNode = async (uri, namedUser, nodeName) => {
     }
 };
 
-const run = async () => {
+const ctmsUpload = async () => {
     const { access_token } = await getBearerToken();
     if (access_token) {
         axios.defaults.headers.common = { 'Authorization': `Bearer ${access_token}` };
@@ -129,4 +129,4 @@ const run = async () => {
         console.log(`Tranpsort Request '${transportRequest.id}' created in Node '${transportRequest.origin}'`);
     }
 }
-run();
+ctmsUpload ();
