@@ -1,4 +1,4 @@
-name: cap-sflight-devops
+name: cap-sflight-devops-$(Date:yyyyMMdd)
 resources:
   containers:
     - container: cfcli
@@ -22,7 +22,7 @@ stages:
             artifact: WebApp
             displayName: "Publish archive folder"
   - stage: Deploy
-    displayName: Deploy and Test
+    displayName: Deploy 
     dependsOn:
       - Build
     jobs:
