@@ -96,7 +96,7 @@ stages:
         steps:
           - bash: |
               npm ci
-              npm run wdi5:edge:headless
+              npm run wdi5:headless
             workingDirectory: $(System.DefaultWorkingDirectory)/e2e
             env:
               wdi5_username: $(wdi5_username)

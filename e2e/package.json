@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "wdi5": "wdio run ./wdio.conf.js",
+    "wdi5:headless": "wdio run ./wdio.conf.js --headless",
     "wdi5:edge": "wdio run ./wdio.edge.conf.js",
     "wdi5:edge:headless": "wdio run ./wdio.edge.conf.js --headless"
   },
