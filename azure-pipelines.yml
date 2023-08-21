@@ -94,8 +94,8 @@ stages:
           vmImage: "windows-latest"
           # vmImage: macOS-latest
         steps:
-          - bash: |
-              npm ci
+          - pwsh: |
+              npm install --omit=dev
               npm run wdi5:headless
             workingDirectory: $(System.DefaultWorkingDirectory)/e2e
             env:
