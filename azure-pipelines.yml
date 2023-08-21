@@ -103,10 +103,18 @@ stages:
               wdi5_password: $(wdi5_password)
               BASE_URL: $(URL_LPD)
             displayName: WDI5 test chrome
+            
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath:  "$(System.DefaultWorkingDirectory)/e2e/logs"
+              artifactType: 'pipeline'
+              artifactName: 'logs'
+            displayName: 'Publish logs'
+
           - task: PublishHtmlReport@1
             condition: succeededOrFailed()
             inputs:
-              reportDir: " $(System.DefaultWorkingDirectory)/test-results/e2e/timeline-report.html"
+              reportDir: "$(System.DefaultWorkingDirectory)/test-results/e2e/timeline-report.html"
               tabName: "WDI5"
 
   # - stage: Release
