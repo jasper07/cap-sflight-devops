@@ -105,7 +105,7 @@ stages:
             displayName: WDI5 test chrome
             
           - task: PublishPipelineArtifact@1
-            condition: succeededOrFailed()
+            condition: failed()
             inputs:
               targetPath:  "$(System.DefaultWorkingDirectory)/e2e/logs"
               artifactType: 'pipeline'
