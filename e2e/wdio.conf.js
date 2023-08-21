@@ -1,15 +1,16 @@
+const { TimelineService } = require("wdio-timeline-reporter/timeline-service");
 exports.config = {
     // ====================
     // wdi5 Configuration
     // ====================
     //
-    // wdi5: {
-    //     screenshotPath: require("path").join("some", "dir", "for", "screenshots"),c // [optional] {string}, default: ""
-    //     screenshotsDisabled: false, // [optional] {boolean}, default: false; if set to true, screenshots won't be taken and not written to file system
-    //     logLevel: "error", // [optional] error | verbose | silent, default: "error"
-    //     skipInjectUI5OnStart: false, // [optional] {boolean}, default: false; true when UI5 is not on the start page, you need to later call <wdioUI5service>.injectUI5() manually
-    //     waitForUI5Timeout: 15000 // [optional] {number}, default: 15000; maximum waiting time in milliseconds while checking for UI5 availability
-    // },
+    wdi5: {
+        screenshotPath: require("path").join("test-results", "screenshots"), // [optional] {string}, default: ""
+        screenshotsDisabled: false, // [optional] {boolean}, default: false; if set to true, screenshots won"t be taken and not written to file system
+        // logLevel: "verbose", // [optional] error | verbose | silent, default: "error"
+        skipInjectUI5OnStart: false, // [optional] {boolean}, default: false; true when UI5 is not on the start page, you need to later call <wdioUI5service>.injectUI5() manually
+        waitForUI5Timeout: 150000 // [optional] {number}, default: 15000; maximum waiting time in milliseconds while checking for UI5 availability
+    },
     //
     // ====================
     // Runner Configuration
@@ -60,6 +61,12 @@ exports.config = {
     //
     capabilities: [
         {
+            "wdi5:authentication": {
+                provider: "BTP", //> mandatory
+                usernameSelector: "#j_username",
+                passwordSelector: "#j_password",
+                submitSelector: "#logOnFormSubmit"
+            },
             // maxInstances can get overwritten per capability. So if you have an in-house Selenium
             // grid with only 5 firefox instances available you can make sure that not more than
             // 5 instances get started at a time.
@@ -68,11 +75,11 @@ exports.config = {
             browserName: "chrome",
             "goog:chromeOptions": {
                 args:
-                    process.argv.indexOf("--headless") > -1
+                    process.argv.indexOf("--headless", "--disable-gpu", "--disable-dev-shm-usage") > -1
                         ? ["--headless"]
                         : process.argv.indexOf("--debug") > -1
-                        ? ["window-size=1440,800", "--auto-open-devtools-for-tabs"]
-                        : ["window-size=1440,800"]
+                            ? ["window-size=1440,800", "--auto-open-devtools-for-tabs"]
+                            : ["window-size=1920,1080", "--allowed-ips=*", "--whitelisted-ips=*", "--disable-gpu", "--no-sandbox"]
             },
             acceptInsecureCerts: true
             // If outputDir is provided WebdriverIO can capture driver session logs
@@ -88,7 +95,9 @@ exports.config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: "error",
+    logLevel: "debug",
+
+    outputDir: __dirname + "/logs",
     //
     // Set specific log levels per logger
     // loggers:
@@ -112,10 +121,10 @@ exports.config = {
     // with `/`, the base url gets prepended, not including the path portion of your baseUrl.
     // If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
     // gets prepended directly.
-    baseUrl: "http://localhost:8080/index.html",
+    baseUrl: process.env.BASE_URL,
     //
     // Default timeout for all waitFor* commands.
-    waitforTimeout: 10000,
+    waitforTimeout: 150000,
     //
     // Default timeout in milliseconds for request
     // if browser driver or grid doesn't send response
@@ -129,7 +138,7 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ["chromedriver", "ui5"],
+    services: ["chromedriver", "ui5", [TimelineService]],
 
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
@@ -151,8 +160,18 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter
-    reporters: ["spec"],
-
+    reporters: ["spec",
+        ["timeline", {
+            outputDir: '.././test-results/e2e/',
+            embedImages: true,
+            images: {
+                quality: 80,
+                resize: false,
+                reductionRatio: 1
+            },
+            screenshotStrategy: 'on:error'
+        }]
+    ],
     //
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/

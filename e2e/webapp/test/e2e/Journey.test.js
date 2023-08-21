@@ -5,18 +5,18 @@ describe("FE basics", () => {
     let FioriElementsFacadeLaunchpad
     before(async () => {
         await wdi5.goTo("#travel-process")
-            
+
         // for navigating back
         FioriElementsFacadeLaunchpad = await browser.fe.initialize({
             onTheShell: {
                 Shell: {}
             }
         })
-    
+
         await $("iframe").waitForExist()
         await browser.switchToFrame(0) //> only 1 frame in the game
         await ui5Service.injectUI5()
-        
+
         FioriElementsFacade = await browser.fe.initialize({
             onTheMainPage: {
                 ListReport: {
@@ -45,35 +45,35 @@ describe("FE basics", () => {
         })
     })
 
-    // it("should see the List Report page", async () => {
-    //     await FioriElementsFacade.execute((Given, When, Then) => {
-    //         Then.onTheMainPage.iSeeThisPage();
-    //     })
-    // })
+    it("should see the List Report page", async () => {
+        await FioriElementsFacade.execute((Given, When, Then) => {
+            Then.onTheMainPage.iSeeThisPage();
+        })
+    })
 
-    // it("should see the Object Pages load and then returns to list", async () => {
-    //     await FioriElementsFacade.execute((Given, When, Then) => {
-    //         When.onTheMainPage.onTable().iPressRow(1)
-    //         Then.onTheDetailPage.iSeeThisPage()
+    it("should see the Object Pages load and then returns to list", async () => {
+        await FioriElementsFacade.execute((Given, When, Then) => {
+            When.onTheMainPage.onTable().iPressRow(1)
+            Then.onTheDetailPage.iSeeThisPage()
 
-    //         When.onTheDetailPage.onTable({ property: "to_Booking" }).iPressRow({ BookingID: "1" });
-    //         Then.onTheItemPage.iSeeThisPage();
-            
-    //     })
+            When.onTheDetailPage.onTable({ property: "to_Booking" }).iPressRow({ BookingID: "1" });
+            Then.onTheItemPage.iSeeThisPage();
 
-    //     await browser.switchToParentFrame()
-    //     await FioriElementsFacadeLaunchpad.execute((Given, When, Then) => {
-            
-    //         When.onTheShell.iNavigateBack()
-    //         When.onTheShell.iNavigateBack()
-            
-    //     })
-    //     await browser.switchToFrame(0)
+        })
 
-    //     await FioriElementsFacade.execute((Given, When, Then) => {
-    //         Then.onTheMainPage.iSeeThisPage()
-    //     })
-    // })
+        await browser.switchToParentFrame()
+        await FioriElementsFacadeLaunchpad.execute((Given, When, Then) => {
+
+            When.onTheShell.iNavigateBack()
+            When.onTheShell.iNavigateBack()
+
+        })
+        await browser.switchToFrame(0)
+
+        await FioriElementsFacade.execute((Given, When, Then) => {
+            Then.onTheMainPage.iSeeThisPage()
+        })
+    })
 
     it("should create a travel request", async () => {
         let beginDate = new Date();
@@ -126,6 +126,11 @@ describe("FE basics", () => {
                 .onForm({ section: "Travel", fieldGroup: "PriceData" })
                 .iChangeField({ property: "BookingFee" }, "50.00");
 
+            // Currency
+            When.onTheDetailPage
+                .onForm({ section: "Travel", fieldGroup: "PriceData" })
+                .iChangeField({ property: "CurrencyCode_code" }, "EUR");
+
             // Description
             When.onTheDetailPage
                 .onForm({ section: "Travel", fieldGroup: "TravelData" })
@@ -156,7 +161,7 @@ describe("FE basics", () => {
             // select row to be deleted
             When.onTheMainPage
                 .onTable()
-                .iSelectRows( { "Customer": "Buchholm (000001)" });
+                .iSelectRows({ "Customer": "Buchholm (000001)" });
 
             Then.onTheMainPage
                 .onTable()

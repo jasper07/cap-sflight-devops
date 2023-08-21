@@ -1,13 +1,12 @@
 {
   "name": "e2e",
   "version": "1.0.0",
-  "description": "",
+  "description": "E2E tests",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "test:wdi5:dev": "wdio run ./wdio.conf.js --debug",
-    "test:wdi5:headless": "wdio run ./wdio.conf.js --headless",
-    "wdi5": "wdio run ./wdio.conf.js"
+    "wdi5": "wdio run ./wdio.conf.js",
+    "wdi5:edge": "wdio run ./wdio.edge.conf.js",
+    "wdi5:edge:headless": "wdio run ./wdio.edge.conf.js --headless"
   },
   "author": "",
   "license": "ISC",
@@ -17,7 +16,10 @@
     "@wdio/mocha-framework": "^7.30.2",
     "@wdio/spec-reporter": "^7.31.1",
     "chromedriver": "^116.0.0",
+    "edgedriver": "^5.3.5",
     "wdio-chromedriver-service": "^7.3.2",
-    "wdio-ui5-service": "^1.5.2"
+    "wdio-edgedriver-service": "^3.0.3",
+    "wdio-timeline-reporter": "^5.1.4",
+    "wdio-ui5-service": "^1.5.0"
   }
 }
