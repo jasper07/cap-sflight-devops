@@ -6,83 +6,82 @@ resources:
       options: --user 0:0 --privileged
 trigger:
   - main
-
 stages:
-  # - stage: Build
-  #   displayName: Build MTA for SAP Cloud Platform
-  #   jobs:
-  #     - job: build
-  #       pool:
-  #         vmImage: "ubuntu-latest"
-  #       steps:
-  #         - script: npm ci
-  #           displayName: NPM install
-  #         - script: npm run lint
-  #           displayName: Lint check all code
+  - stage: Build
+    displayName: Build MTA for SAP Cloud Platform
+    jobs:
+      - job: build
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - script: npm ci
+            displayName: NPM install
+          - script: npm run lint
+            displayName: Lint check all code
 
-  #         - script: npm run test -- --watchAll=false --reporters=default --reporters=jest-junit --coverage --coverageReporters=cobertura
-  #           displayName: Run Unit tests - with junit and coverage results
+          - script: npm run test -- --watchAll=false --reporters=default --reporters=jest-junit --coverage --coverageReporters=cobertura
+            displayName: Run Unit tests - with junit and coverage results
 
-  #         - bash: |
-  #             npm ci
-  #             npm run test:node -- --ci
-  #           workingDirectory: $(System.DefaultWorkingDirectory)/app/travel_processor
-  #           displayName: Run integration tests - Manage Travels
+          - bash: |
+              npm ci
+              npm run test:node -- --ci
+            workingDirectory: $(System.DefaultWorkingDirectory)/app/travel_processor
+            displayName: Run integration tests - Manage Travels
 
-  #         - bash: |
-  #             npm ci
-  #             npm run test:node -- --ci
-  #           workingDirectory: $(System.DefaultWorkingDirectory)/app/travel_analytics
-  #           displayName: Run integration tests - Analyze Bookings
+          - bash: |
+              npm ci
+              npm run test:node -- --ci
+            workingDirectory: $(System.DefaultWorkingDirectory)/app/travel_analytics
+            displayName: Run integration tests - Analyze Bookings
 
-  #         - script: npm run build:cf:sqlite
-  #           displayName: Build MTA
+          - script: npm run build:cf:sqlite
+            displayName: Build MTA
 
-  #         - publish: $(System.DefaultWorkingDirectory)/mta_archives/.
-  #           artifact: WebApp
-  #           displayName: "Publish archive folder"
+          - publish: $(System.DefaultWorkingDirectory)/mta_archives/.
+            artifact: WebApp
+            displayName: "Publish archive folder"
 
-  #         - task: PublishCodeCoverageResults@1
-  #           displayName: Publish Code Coverage Results
-  #           inputs:
-  #             codeCoverageTool: Cobertura
-  #             summaryFileLocation: $(System.DefaultWorkingDirectory)/test-results/coverage/cobertura-coverage.xml
+          - task: PublishCodeCoverageResults@1
+            displayName: Publish Code Coverage Results
+            inputs:
+              codeCoverageTool: Cobertura
+              summaryFileLocation: $(System.DefaultWorkingDirectory)/test-results/coverage/cobertura-coverage.xml
 
-  #         - task: PublishTestResults@2
-  #           displayName: Publish Test Results
-  #           inputs:
-  #             testResultsFormat: "JUnit"
-  #             testResultsFiles: "**/TEST-*.xml"
-  #             mergeTestResults: false
+          - task: PublishTestResults@2
+            displayName: Publish Test Results
+            inputs:
+              testResultsFormat: "JUnit"
+              testResultsFiles: "**/TEST-*.xml"
+              mergeTestResults: false
 
-  # - stage: Deploy
-  #   displayName: Deploy
-  #   variables:
-  #     - group: cloudfoundry-variables
-  #   dependsOn:
-  #     - Build
-  #   jobs:
-  #     - job: deploy
-  #       pool:
-  #         vmImage: "ubuntu-latest"
-  #       container: cfcli
-  #       steps:
-  #         - checkout: none
-  #         - download: current
-  #           artifact: WebApp
-  #         - bash: |
-  #             cf login -u "$(CF-USER)" -p "$(CF-PASSWORD)" -a "$(CF-API)" -o "$(CF-ORG)" -s "$(CF-SPACE)"
-  #             cf deploy $(Pipeline.Workspace)/WebApp/*.mtar -f
+  - stage: Deploy
+    displayName: Deploy
+    variables:
+      - group: cloudfoundry-variables
+    dependsOn:
+      - Build
+    jobs:
+      - job: deploy
+        pool:
+          vmImage: "ubuntu-latest"
+        container: cfcli
+        steps:
+          - checkout: none
+          - download: current
+            artifact: WebApp
+          - bash: |
+              cf login -u "$(CF-USER)" -p "$(CF-PASSWORD)" -a "$(CF-API)" -o "$(CF-ORG)" -s "$(CF-SPACE)"
+              cf deploy $(Pipeline.Workspace)/WebApp/*.mtar -f
 
-  # - stage: Compliance
-  #   displayName: Scan for vulnerabilities
-  #   dependsOn:
-  #     - Build
-  #   jobs:
-  #     - job: compliance
-  #       steps:
-  #         - checkout: none
-  #         - script: echo Compliance
+  - stage: Compliance
+    displayName: Scan for vulnerabilities
+    dependsOn:
+      - Build
+    jobs:
+      - job: compliance
+        steps:
+          - checkout: none
+          - script: echo Compliance
 
   - stage: E2E_tests
     displayName: E2E tests
@@ -118,29 +117,29 @@ stages:
               reportDir: "$(System.DefaultWorkingDirectory)/test-results/e2e/timeline-report.html"
               tabName: "WDI5"
 
-  # - stage: Release
-  #   displayName: Upload to TMS queue
-  #   dependsOn:
-  #     - Deploy
-  #   jobs:
-  #     - job: upload
-  #       pool:
-  #         vmImage: "ubuntu-latest"
-  #       steps:
-  #         - checkout: self
-  #         - script: npm install
-  #           displayName: NPM install
-  #         - download: current
-  #           artifact: WebApp
-  #         - script: npm run ctmsupload
-  #           workingDirectory: $(System.DefaultWorkingDirectory)/pipeline
-  #           env:
-  #             TMS_API: $(TMS_API) #ctms-variables
-  #             TOKEN_URL: $(TOKEN_URL) #ctms-variables
-  #             CLIENT_ID: $(CLIENT_ID) #ctms-variables
-  #             CLIENT_SECRET: $(CLIENT_SECRET) #ctms-variables
-  #             CTMS_NODE: "QAS_MTA"
-  #             USER_NAME: $(Build.RequestedForEmail)
-  #             DESCRIPTION: "$(Build.DefinitionName): $(Build.SourceVersionMessage)"
-  #             MTA_PATH: "$(Pipeline.Workspace)/WebApp"
-  #           displayName: Upload to CTMS
+  - stage: Release
+    displayName: Upload to TMS queue
+    dependsOn:
+      - Deploy
+    jobs:
+      - job: upload
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - checkout: self
+          - script: npm install
+            displayName: NPM install
+          - download: current
+            artifact: WebApp
+          - script: npm run ctmsupload
+            workingDirectory: $(System.DefaultWorkingDirectory)/pipeline
+            env:
+              TMS_API: $(TMS_API) #ctms-variables
+              TOKEN_URL: $(TOKEN_URL) #ctms-variables
+              CLIENT_ID: $(CLIENT_ID) #ctms-variables
+              CLIENT_SECRET: $(CLIENT_SECRET) #ctms-variables
+              CTMS_NODE: "QAS_MTA"
+              USER_NAME: $(Build.RequestedForEmail)
+              DESCRIPTION: "$(Build.DefinitionName): $(Build.SourceVersionMessage)"
+              MTA_PATH: "$(Pipeline.Workspace)/WebApp"
+            displayName: Upload to CTMS
