@@ -23,4 +23,10 @@ stages:
               wdi5_password: $(wdi5_password)
               BASE_URL: $(URL_LPD)
             displayName: 'Run browserstack'
-          - task: BrowserStackResults@0
+            
+          - task: BrowserStackStopLocal@0
+
+
+          - task: BrowserStackResults@1
+            inputs:
+              browserstackProduct: 'automate'
