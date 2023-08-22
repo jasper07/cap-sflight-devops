@@ -7,17 +7,24 @@ resources:
 trigger:
   - main
 stages:
+
   - stage: scan
     displayName: scan code
     jobs:
       - job: scan
-        pool:
-          vmImage: "ubuntu-latest"
+        steps:      
+        - task: MicrosoftSecurityDevOps@1
+            displayName: "Run Microsoft Security DevOps"
+            continueOnError: true
+
+  - stage: next
+    displayName: next
+    jobs:
+      - job: next
         steps:
+        - checkout: none
+        - script: echo Compliance
         
-          - task: MicrosoftSecurityDevOps@1
-            inputs:
-              command: 'run'
         
           #  - task: MicrosoftSecurityDevOps@1
           #     displayName: 'Microsoft security for devops'
