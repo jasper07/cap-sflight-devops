@@ -10,11 +10,10 @@ const desktopCapabilities = {
         "projectName": "cap-sflight",
         "buildName": BROWSERSTACK_BUILD_NAME,
         "resolution": "1024x768",
-        "sessionName": "Browser Test"
+        "sessionName": "Parallel_Test"
     }
 };
 
-desktopCapabilities['bstack:options'].sessionName = desktopCapabilities['bstack:options'].
 
 
 const authentication = {
