@@ -55,7 +55,7 @@ stages:
               mergeTestResults: false
 
   - stage: Deploy
-    displayName: Deploy
+    displayName: Deploy to Development
     variables:
       - group: cloudfoundry-variables
     dependsOn:
@@ -73,20 +73,25 @@ stages:
               cf login -u "$(CF-USER)" -p "$(CF-PASSWORD)" -a "$(CF-API)" -o "$(CF-ORG)" -s "$(CF-SPACE)"
               cf deploy $(Pipeline.Workspace)/WebApp/*.mtar -f
 
-  - stage: Compliance
-    displayName: Scan for vulnerabilities
+  - stage: Scan
+    displayName: Scan Code for vulnerabilities
     dependsOn:
-      - Build
+      - Deploy
     jobs:
-      - job: compliance
-        steps:
-          - checkout: none
-          - script: echo Compliance
+      - job: scan
+        steps:      
+        - task: SnykSecurityScan@1
+          inputs:
+            serviceConnectionEndpoint: 'Snyk API'
+            testType: 'app'
+            monitorWhen: 'never'
+            failOnIssues: false
+            projectName: 'cap-sflight'
 
   - stage: E2E_tests
-    displayName: E2E tests
-    # dependsOn:
-    # - Deploy
+    displayName: Perform E2E Tests
+    dependsOn:
+    - Scan
     jobs:
       - job: E2Etests
         pool:
@@ -117,10 +122,10 @@ stages:
               reportDir: "$(System.DefaultWorkingDirectory)/test-results/e2e/timeline-report.html"
               tabName: "WDI5"
 
-  - stage: Release
+  - stage: Upload
     displayName: Upload to TMS queue
     dependsOn:
-      - Deploy
+      - E2E_tests
     jobs:
       - job: upload
         pool:
