@@ -8,9 +8,9 @@ const desktopCapabilities = {
         "osVersion": "11",
         "browserVersion": "latest",
         "projectName": "cap-sflight",
+        "sessionName": "Parallel_Test",
         "buildName": BROWSERSTACK_BUILD_NAME,
-        "resolution": "1024x768",
-        "sessionName": "Parallel_Test"
+        "resolution": "1024x768"
     }
 };
 
