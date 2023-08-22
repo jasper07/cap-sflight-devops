@@ -1,4 +1,3 @@
-name: cap-sflight-devops-$(Date:yyyyMMdd)
 trigger:
   - main
 stages:
@@ -9,8 +8,6 @@ stages:
         pool:
           vmImage: "ubuntu-latest"
         steps:
-          - script: npm install
-            displayName: NPM install
           - task: BrowserStackConfig@0
             inputs:
               BrowserStackServiceEndPoint: 'BrowserStack'
@@ -24,7 +21,7 @@ stages:
               BASE_URL: $(URL_LPD)
             displayName: 'Run BrowserStack'
             
-          - task: BrowserStackStopLocal@0
+          # - task: BrowserStackStopLocal@0
 
 
           - task: BrowserStackResults@1
