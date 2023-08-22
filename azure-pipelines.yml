@@ -14,8 +14,8 @@ stages:
       - job: scan
         steps:      
         - task: MicrosoftSecurityDevOps@1
-            displayName: "Run Microsoft Security DevOps"
-            continueOnError: true
+          displayName: 'Run Microsoft Security DevOps'
+          continueOnError: true
 
   - stage: next
     displayName: next
