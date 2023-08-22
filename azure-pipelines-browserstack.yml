@@ -1,0 +1,27 @@
+name: cap-sflight-devops-$(Date:yyyyMMdd)
+resources:
+trigger:
+  - main
+stages:
+  - stage: E2E_test
+    displayName: Run WDI5 Work Zone tests on BrowserStack
+    jobs:
+      - job: build
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - script: npm install
+            displayName: NPM install
+          - task: BrowserStackConfig@0
+            inputs:
+              BrowserStackServiceEndPoint: 'BrowserStack'
+          - script: |
+              npm install
+              npm wdi5:browserstack
+            workingDirectory: $(System.DefaultWorkingDirectory)/e2e
+            env:
+              wdi5_username: $(wdi5_username)
+              wdi5_password: $(wdi5_password)
+              BASE_URL: $(URL_LPD)
+            displayName: 'Run browserstack'
+          - task: BrowserStackResults@0

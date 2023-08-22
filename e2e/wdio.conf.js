@@ -1,4 +1,7 @@
 const { TimelineService } = require("wdio-timeline-reporter/timeline-service");
+
+
+
 exports.config = {
     // ====================
     // wdi5 Configuration
@@ -9,7 +12,7 @@ exports.config = {
         screenshotsDisabled: false, // [optional] {boolean}, default: false; if set to true, screenshots won"t be taken and not written to file system
         // logLevel: "verbose", // [optional] error | verbose | silent, default: "error"
         skipInjectUI5OnStart: false, // [optional] {boolean}, default: false; true when UI5 is not on the start page, you need to later call <wdioUI5service>.injectUI5() manually
-        waitForUI5Timeout: 150000 // [optional] {number}, default: 15000; maximum waiting time in milliseconds while checking for UI5 availability
+        waitForUI5Timeout: 60000 // [optional] {number}, default: 15000; maximum waiting time in milliseconds while checking for UI5 availability
     },
     //
     // ====================

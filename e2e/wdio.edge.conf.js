@@ -16,8 +16,8 @@ const edgeCapability = {
     "ms:edgeOptions": {
         args:
             process.argv.indexOf("--headless") > -1
-                ? ["--headless", "--InPrivate", "--disable-gpu", "--disable-dev-shm-usage"] :
-                ["--InPrivate", "--disable-gpu", "--disable-dev-shm-usage"]
+                ? ["--headless", "--InPrivate", "--disable-gpu", "--disable-dev-shm-usage", "--window-size=1900,1080"] :
+                ["--InPrivate", "--disable-gpu", "--disable-dev-shm-usage", "--start-maximized", "--window-size=1900,1080"]
     }
 };
 
