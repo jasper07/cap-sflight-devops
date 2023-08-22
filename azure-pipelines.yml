@@ -55,7 +55,7 @@ stages:
               mergeTestResults: false
 
   - stage: Deploy
-    displayName: Deploy
+    displayName: Deploy to Development
     variables:
       - group: cloudfoundry-variables
     dependsOn:
@@ -74,9 +74,9 @@ stages:
               cf deploy $(Pipeline.Workspace)/WebApp/*.mtar -f
 
   - stage: Scan
-    displayName: Scan for vulnerabilities
+    displayName: Scan Code for vulnerabilities
     dependsOn:
-      - Build
+      - Deploy
     jobs:
       - job: scan
         steps:      
@@ -89,7 +89,7 @@ stages:
             projectName: 'cap-sflight'
 
   - stage: E2E_tests
-    displayName: E2E tests
+    displayName: Perform E2E Tests
     dependsOn:
     - Scan
     jobs:
