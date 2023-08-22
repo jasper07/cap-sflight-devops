@@ -14,10 +14,15 @@ stages:
         pool:
           vmImage: "ubuntu-latest"
         steps:
-           - task: MicrosoftSecurityDevOps@1
-              displayName: 'Microsoft security for devops'
-              inputs:
-                categories: 'code'
+        
+          - task: MicrosoftSecurityDevOps@1
+            inputs:
+              command: 'run'
+        
+          #  - task: MicrosoftSecurityDevOps@1
+          #     displayName: 'Microsoft security for devops'
+          #     inputs:
+          #       categories: 'code'
                 
           # - task: Gitleaks@2
           #   displayName: 'Scan secrets'
