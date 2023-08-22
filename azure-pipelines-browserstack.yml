@@ -12,6 +12,7 @@ stages:
             inputs:
               BrowserStackServiceEndPoint: 'BrowserStack'
           - script: |
+              echo $(BROWSERSTACK_BUILD_NAME)
               npm install
               npm run wdi5:browserstack
             workingDirectory: $(System.DefaultWorkingDirectory)/e2e
