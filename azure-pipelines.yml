@@ -17,7 +17,7 @@ stages:
           - task: Gitleaks@2
             displayName: 'Scan secrets'
             inputs:
-              scanlocation: ${{ parameters.scanLocation }}
+              scanlocation: $(System.DefaultWorkingDirectory)
               configtype: 'default'
               predefinedconfigfile: 'GitleaksUdmCombo.toml'
               scanmode: 'all'
@@ -29,7 +29,7 @@ stages:
           - task: PublishBuildArtifacts@1
             displayName: 'Publish sarif results'
             inputs:
-              PathtoPublish: ${{ parameters.scanLocation }}
+              PathtoPublish:  $(System.DefaultWorkingDirectory)
               ArtifactName: 'CodeAnalysisLogs'
               StoreAsTar: true
             condition: succeededOrFailed()
