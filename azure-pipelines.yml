@@ -14,25 +14,30 @@ stages:
         pool:
           vmImage: "ubuntu-latest"
         steps:
-          - task: Gitleaks@2
-            displayName: 'Scan secrets'
-            inputs:
-              scanlocation: $(System.DefaultWorkingDirectory)
-              configtype: 'default'
-              predefinedconfigfile: 'GitleaksUdmCombo.toml'
-              scanmode: 'all'
-              reportformat: 'sarif'
-              reportname: 'gitleaks'
-              uploadresults: true
-              verbose: true
-              version: 'latest'
-          - task: PublishBuildArtifacts@1
-            displayName: 'Publish sarif results'
-            inputs:
-              PathtoPublish:  $(System.DefaultWorkingDirectory)
-              ArtifactName: 'CodeAnalysisLogs'
-              StoreAsTar: true
-            condition: succeededOrFailed()
+           - task: MicrosoftSecurityDevOps@1
+              displayName: 'Microsoft security for devops'
+              inputs:
+                categories: 'code'
+                
+          # - task: Gitleaks@2
+          #   displayName: 'Scan secrets'
+          #   inputs:
+          #     scanlocation: $(System.DefaultWorkingDirectory)
+          #     configtype: 'default'
+          #     predefinedconfigfile: 'GitleaksUdmCombo.toml'
+          #     scanmode: 'all'
+          #     reportformat: 'sarif'
+          #     reportname: 'gitleaks'
+          #     uploadresults: true
+          #     verbose: true
+          #     version: 'latest'
+          # - task: PublishBuildArtifacts@1
+          #   displayName: 'Publish sarif results'
+          #   inputs:
+          #     PathtoPublish:  $(System.DefaultWorkingDirectory)
+          #     ArtifactName: 'CodeAnalysisLogs'
+          #     StoreAsTar: true
+          #   condition: succeededOrFailed()
   # - stage: Build
   #   displayName: Build MTA for SAP Cloud Platform
   #   jobs:
