@@ -9,9 +9,13 @@ const desktopCapabilities = {
         "browserVersion": "latest",
         "projectName": "cap-sflight",
         "buildName": BROWSERSTACK_BUILD_NAME,
-        "resolution": '1024x768'
+        "resolution": "1024x768",
+        "sessionName": "Browser Test"
     }
 };
+
+desktopCapabilities['bstack:options'].sessionName = desktopCapabilities['bstack:options'].
+
 
 const authentication = {
     "wdi5:authentication": {
