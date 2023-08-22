@@ -21,7 +21,6 @@ stages:
               wdi5_password: $(wdi5_password)
               BASE_URL: $(URL_LPD)
               BROWSERSTACK_BUILD_NAME: $(BROWSERSTACK_BUILD_NAME)
-              BROWSERSTACK_BUILD_NAME1: $(System.DefinitionName)-$(Build.BuildId)
             displayName: 'Run BrowserStack'
             
           # - task: BrowserStackStopLocal@0
