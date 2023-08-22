@@ -1,5 +1,5 @@
 const wdioConfig = require("./wdio.conf.js");
-const { BROWSERSTACK_USERNAME, BROWSERSTACK_ACCESS_KEY } = process.env;
+const { BROWSERSTACK_USERNAME, BROWSERSTACK_ACCESS_KEY, BROWSERSTACK_BUILD_NAME } = process.env;
 
 
 const desktopCapabilities = {
@@ -8,7 +8,7 @@ const desktopCapabilities = {
         "osVersion": "11",
         "browserVersion": "latest",
         "projectName": "cap-sflight",
-        "buildName": "bstack-demo",
+        "buildName": BROWSERSTACK_BUILD_NAME,
         "resolution": '1024x768'
     }
 };
