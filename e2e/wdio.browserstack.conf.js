@@ -26,7 +26,8 @@ let capabilities = [
     {
         ...authentication,
         ...desktopCapabilities,
-        browserName: 'Chrome'
+        browserName: 'Chrome',
+        build: BROWSERSTACK_BUILD_NAME
     // },
     // {
     //     ...authentication,
