@@ -16,13 +16,13 @@ stages:
               BrowserStackServiceEndPoint: 'BrowserStack'
           - script: |
               npm install
-              npm wdi5:browserstack
+              npm run wdi5:browserstack
             workingDirectory: $(System.DefaultWorkingDirectory)/e2e
             env:
               wdi5_username: $(wdi5_username)
               wdi5_password: $(wdi5_password)
               BASE_URL: $(URL_LPD)
-            displayName: 'Run browserstack'
+            displayName: 'Run BrowserStack'
             
           - task: BrowserStackStopLocal@0
 
