@@ -26,7 +26,15 @@ stages:
             
           # - task: BrowserStackStopLocal@0
 
+          - task: PublishPipelineArtifact@1
+            condition: succeededOrFailed()
+            inputs: 
+              targetPath:  "$(System.DefaultWorkingDirectory)/e2e/logs"
+              artifactType: 'pipeline'
+              artifactName: 'logs'
+            displayName: 'Publish logs'
 
           - task: BrowserStackResults@1
+            condition: 
             inputs:
               browserstackProduct: 'automate'
