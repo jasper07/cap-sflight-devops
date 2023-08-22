@@ -1,5 +1,4 @@
 name: cap-sflight-devops-$(Date:yyyyMMdd)
-resources:
 trigger:
   - main
 stages:
