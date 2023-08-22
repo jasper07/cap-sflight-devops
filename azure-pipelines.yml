@@ -13,9 +13,16 @@ stages:
     jobs:
       - job: scan
         steps:      
-        - task: MicrosoftSecurityDevOps@1
-          displayName: 'Run Microsoft Security DevOps'
-          continueOnError: true
+        - task: SnykSecurityScan@1
+          inputs:
+            serviceConnectionEndpoint: 'Snyk API'
+            testType: 'app'
+            monitorWhen: 'never'
+            failOnIssues: true
+            projectName: 'cap-sflight'
+        # - task: MicrosoftSecurityDevOps@1
+        #   displayName: 'Run Microsoft Security DevOps'
+        #   continueOnError: true
 
   - stage: next
     displayName: next
