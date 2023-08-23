@@ -7,8 +7,7 @@ pool:
 steps:
   - task: k6-load-test@0
     inputs:
-      filename: 'capsflightLaunchpad.js'
-    workingDirectory: $(System.DefaultWorkingDirectory)/performance
+      filename: 'performance/capsflightLaunchpad.js'
     env:
      K6_USERNAME: $(K6_USERNAME)
      K6_PASSWORD: $(K6_PASSWORD)
