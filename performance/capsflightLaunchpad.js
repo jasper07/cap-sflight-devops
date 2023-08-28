@@ -14,7 +14,7 @@ const APPID = '00202967-9d5e-484c-ac27-56f294444cfc.sapfecapsflight.sapfecaptrav
 // 1. init code
 export let options = {
     stages: [
-        { target: 1, duration: "1s" }, // Linearly ramp up from 1 to 10 VUs (virtual users) during first minute
+        { target: 10, duration: "30s" }, // Linearly ramp up from 1 to 10 VUs (virtual users) during first minute
         // { target: 10, duration: "30s" }, // Hold at 10 VUs for the next 30 seconds
         // { target: 0, duration: "30s" }     // Linearly ramp down from 10 to 0 VUs over the last 30 seconds
         // // Total execution time will be ~2 minutes
