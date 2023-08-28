@@ -1,3 +1,4 @@
+/*global __ENV open*/
 export function loadDotEnv() {
     try {
       let dotenv = open("./.env")
@@ -10,5 +11,6 @@ export function loadDotEnv() {
         __ENV[parts[0]] = parts[1]
       })
     } catch(_err) {
+      console.debug(_err)
     }
   }

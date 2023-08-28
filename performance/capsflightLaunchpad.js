@@ -1,6 +1,7 @@
+/*global __ENV*/
 import http from 'k6/http'
 import { check, group, sleep } from "k6";
-import { Counter, Rate, Trend } from "k6/metrics";
+import { Rate } from "k6/metrics";
 import { loadDotEnv } from './dotenv.js';
 import { htmlReport } from "https://raw.githubusercontent.com/benc-uk/k6-reporter/main/dist/bundle.js";
 import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.1/index.js";
@@ -13,10 +14,10 @@ const APPID = '00202967-9d5e-484c-ac27-56f294444cfc.sapfecapsflight.sapfecaptrav
 // 1. init code
 export let options = {
     stages: [
-        { target: 10, duration: "1m" }, // Linearly ramp up from 1 to 10 VUs (virtual users) during first minute
-        { target: 10, duration: "30s" }, // Hold at 10 VUs for the next 30 seconds
-        { target: 0, duration: "30s" }     // Linearly ramp down from 10 to 0 VUs over the last 30 seconds
-        // Total execution time will be ~2 minutes
+        { target: 1, duration: "1s" }, // Linearly ramp up from 1 to 10 VUs (virtual users) during first minute
+        // { target: 10, duration: "30s" }, // Hold at 10 VUs for the next 30 seconds
+        // { target: 0, duration: "30s" }     // Linearly ramp down from 10 to 0 VUs over the last 30 seconds
+        // // Total execution time will be ~2 minutes
     ],
     thresholds: {
         "http_req_duration": ["p(95)<500"], // We want the 95th percentile of all HTTP request durations to be less than 500ms
@@ -24,13 +25,13 @@ export let options = {
     }
 };
 
-const start = Date.now();
+// const start = Date.now();
 const DEBUG = __ENV.DEBUG; //enviroment variable for logging 
 
 const DebugOrLog = (textToLog) => {
     if (DEBUG) {
-        var millis = Date.now() - start; // we get the ms ellapsed from the start of the test
-        var time = Math.floor(millis / 1000); // in seconds
+        // var millis = Date.now() - start; // we get the ms ellapsed from the start of the test
+        // var time = Math.floor(millis / 1000); // in seconds
         console.log(`${textToLog}`);
     }
 }
@@ -47,8 +48,6 @@ export function setup() {
         username: __ENV.K6_USERNAME,
         password: __ENV.K6_PASSWORD
     }
-
-    console.log(credentials.username)
     DebugOrLog("url 1 " + BASE_URL) //https://secondphase.launchpad.cfapps.ap10.hana.ondemand.com
     let res = http.get(BASE_URL);
 
@@ -56,8 +55,8 @@ export function setup() {
     let [groupinput, signature, redirect] = /signature=(.*?);path=\/;Secure;SameSite=None;";location="(.*)"/.exec(res.body);
 
     check(res, {
-        "has value 'signature'": (r) => signature.length > 0,
-        "has value 'redirect '": (r) => redirect.length > 0
+        "has value 'signature'": () => groupinput.length && signature.length > 0,
+        "has value 'redirect '": () => redirect.length > 0
     });
 
     // set cookies so the auth remembers the location to goto at the end of saml oauth dance
@@ -89,10 +88,10 @@ export function setup() {
     DebugOrLog("url 7 " + res.url) //https://secondphase.launchpad.cfapps.ap10.hana.ondemand.com/site
     // if you dont want to do the authentication, grab these two cookies from a logged in user JSESSIONID & __VCAP_ID__'
     check(res, {
-        "status is 200'": (r) => res.status === 200,
-        "redirected back to start": (r) => res.url.indexOf(BASE_URL) > -1,
-        "has 'JSESSIONID' cookie": (r) => vuJar.cookiesForURL(res.url)['JSESSIONID'].length > 0,
-        "has '__VCAP_ID__' cookie": (r) => vuJar.cookiesForURL(res.url)['__VCAP_ID__'].length > 0,
+        "status is 200'": () => res.status === 200,
+        "redirected back to start": () => res.url.indexOf(BASE_URL) > -1,
+        "has 'JSESSIONID' cookie": () => vuJar.cookiesForURL(res.url)['JSESSIONID'].length > 0,
+        "has '__VCAP_ID__' cookie": () => vuJar.cookiesForURL(res.url)['__VCAP_ID__'].length > 0,
     });
     DebugOrLog(`== SETUP END  btp launchpad authentication - default IDP===============`)
     return vuJar.cookiesForURL(res.url);
@@ -121,7 +120,7 @@ export default function main(cookiesForURL) {
 
         let { TravelUUID, IsActiveEntity, TravelID } = JSON.parse(res.body);
         check(res, {
-            "Draft created'": (r) => res.status === 201
+            "Draft created'": () => res.status === 201
         }) || errorRate.add(1);
 
         let beginDate = new Date();
