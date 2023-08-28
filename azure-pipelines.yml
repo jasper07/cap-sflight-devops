@@ -8,7 +8,7 @@ trigger:
   - main
 stages:
   - stage: Build
-    displayName: Build MTA for SAP Cloud Platform
+    displayName: Build MTAR
     jobs:
       - job: build
         pool:
@@ -55,7 +55,7 @@ stages:
               mergeTestResults: false
 
   - stage: Deploy
-    displayName: Deploy to Development
+    displayName: Deploy to DEV
     variables:
       - group: cloudfoundry-variables
     dependsOn:
@@ -74,7 +74,7 @@ stages:
               cf deploy $(Pipeline.Workspace)/WebApp/*.mtar -f
 
   - stage: Scan
-    displayName: Scan Code for vulnerabilities
+    displayName: Security Scan
     dependsOn:
       - Deploy
     jobs:
