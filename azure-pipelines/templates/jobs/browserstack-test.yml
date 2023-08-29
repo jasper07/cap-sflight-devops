@@ -1,8 +1,10 @@
 parameters:
  scriptName: ''
+ runJob: false
 
 jobs:
-  - job: build
+  - job: browserstack
+    condition: eq(${{ parameters.runJob }}, true)
     steps:
       - task: BrowserStackConfig@0
         inputs:
