@@ -2,7 +2,7 @@ trigger:
   - main
 stages:
   - stage: E2E_test
-    displayName: Run WDI5 Work Zone tests on BrowserStack
+    displayName: Run K6 performance test
     jobs:
       - template: azure-pipelines/templates/jobs/performance-test.yml
         parameters:
