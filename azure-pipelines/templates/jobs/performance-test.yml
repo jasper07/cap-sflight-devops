@@ -2,7 +2,7 @@ parameters:
  filename: ''
 
 jobs:
-  - job: build
+  - job: k6loadtest
     steps:
       - task: k6-load-test@0
         inputs:
