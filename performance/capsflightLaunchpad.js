@@ -175,7 +175,6 @@ export function teardown() {
 }
 
 export function handleSummary(data) {
-    console.log(location)
     return {
         'result.html' : htmlReport(data),
         stdout: textSummary(data, { indent: " ", enableColors: true }),
