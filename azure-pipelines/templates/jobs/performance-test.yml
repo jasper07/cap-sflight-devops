@@ -1,3 +1,6 @@
+parameters:
+ filename: ''
+
 jobs:
   - job: build
     variables:
@@ -6,7 +9,7 @@ jobs:
     steps:
     - task: k6-load-test@0
       inputs:
-        filename: $(filename)
+        filename: ${{ parameters.filename }} 
       env:
       K6_USERNAME: $(K6_USERNAME)
       K6_PASSWORD: $(K6_PASSWORD)
