@@ -2,7 +2,7 @@ trigger:
   - master
 
 jobs:
-  - template: azure-pipelines/templates/jobs/browserstack-test.yml
+  - template: azure-pipelines/templates/jobs/performance-test.yml
     parameters: 
       filename: performance/capsflightLaunchpad.js
 

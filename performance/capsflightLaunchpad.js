@@ -106,8 +106,6 @@ export default function main(cookiesForURL) {
         vuJar.set(BASE_URL, property, cookiesForURL[property]);
     }
 
-
-
     group('create flight', () => {
         const params = {
             headers: {
@@ -179,7 +177,7 @@ export function teardown() {
 export function handleSummary(data) {
     console.log(location)
     return {
-        'report.html' : htmlReport(data),
+        'result.html' : htmlReport(data),
         stdout: textSummary(data, { indent: " ", enableColors: true }),
     };
 }
