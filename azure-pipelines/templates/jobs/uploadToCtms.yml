@@ -1,0 +1,24 @@
+parameters:
+  runJob: true
+
+jobs:
+  - job: uploadToCtms
+    condition: eq(${{ parameters.runJob }}, true)
+    steps:
+      - checkout: self
+      - script: npm install
+        displayName: NPM install
+      - download: current
+        artifact: WebApp
+      - script: npm run ctmsupload
+        workingDirectory: $(System.DefaultWorkingDirectory)/pipeline
+        env:
+          TMS_API: $(TMS_API) #ctms-variables
+          TOKEN_URL: $(TOKEN_URL) #ctms-variables
+          CLIENT_ID: $(CLIENT_ID) #ctms-variables
+          CLIENT_SECRET: $(CLIENT_SECRET) #ctms-variables
+          CTMS_NODE: "QAS_MTA"
+          USER_NAME: $(Build.RequestedForEmail)
+          DESCRIPTION: "$(Build.DefinitionName): $(Build.SourceVersionMessage)"
+          MTA_PATH: "$(Pipeline.Workspace)/WebApp"
+        displayName: Upload to CTMS

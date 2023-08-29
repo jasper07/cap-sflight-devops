@@ -1,8 +1,10 @@
 parameters:
  filename: ''
+ runJob: false
 
 jobs:
   - job: k6loadtest
+    condition: eq(${{ parameters.runJob }}, true)
     steps:
       - task: k6-load-test@0
         inputs:
