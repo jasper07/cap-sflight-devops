@@ -1,8 +1,9 @@
 trigger:
-  - master
-
-jobs:
-  - template: azure-pipelines/templates/jobs/performance-test.yml
-    parameters: 
-      filename: performance/capsflightLaunchpad.js
-
+  - main
+stages:
+  - stage: E2E_test
+    displayName: Run WDI5 Work Zone tests on BrowserStack
+    jobs:
+      - template: azure-pipelines/templates/jobs/performance-test.yml
+        parameters:
+          filename: performance/capsflightLaunchpad.js
