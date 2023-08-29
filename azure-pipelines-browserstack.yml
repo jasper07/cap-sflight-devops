@@ -8,7 +8,7 @@ stages:
         parameters: 
           scriptName: wdi5:browserstack
           runJob: false
-      - template: azure-pipelines/templates/jobs/browserstack-test.yml
+      - template: azure-pipelines/templates/jobs/wdi5-test.yml
         parameters: 
           scriptName: wdi5:headless
           runJob: true
