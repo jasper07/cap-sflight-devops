@@ -1,0 +1,32 @@
+parameters:
+ scriptName: ''
+
+jobs:
+  - job: build
+    steps:
+      - task: BrowserStackConfig@0
+        inputs:
+          BrowserStackServiceEndPoint: "BrowserStack"
+      - script: |
+          npm install
+          npm run ${{ parameters.scriptName }} 
+        workingDirectory: $(System.DefaultWorkingDirectory)/e2e
+        env:
+          wdi5_username: $(wdi5_username)
+          wdi5_password: $(wdi5_password)
+          BASE_URL: $(URL_LPD)
+          BROWSERSTACK_BUILD_NAME: $(BROWSERSTACK_BUILD_NAME)
+        displayName: "Run BrowserStack"
+
+      - task: PublishPipelineArtifact@1
+        condition: succeededOrFailed()
+        inputs:
+          targetPath: "$(System.DefaultWorkingDirectory)/e2e/logs"
+          artifactType: "pipeline"
+          artifactName: "logs"
+        displayName: "Publish wdi5 logs"
+
+      - task: BrowserStackResults@1
+        condition:
+        inputs:
+          browserstackProduct: "automate"
