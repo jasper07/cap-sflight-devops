@@ -4,7 +4,7 @@ stages:
   - stage: E2E_test
     displayName: Run WDI5 Work Zone tests on BrowserStack
     jobs:
-      - template: azure-pipelines/template/jobs/browserstack-test.yml
+      - template: azure-pipelines/templates/jobs/browserstack-test.yml
         parameters: 
           scriptName: wdi5:browserstack
 
