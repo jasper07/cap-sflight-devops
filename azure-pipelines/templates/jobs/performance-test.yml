@@ -4,16 +4,16 @@ parameters:
 jobs:
   - job: build
     steps:
-    - task: k6-load-test@0
-      inputs:
-        filename: ${{ parameters.filename }} 
-      env:
-      K6_USERNAME: $(K6_USERNAME)
-      K6_PASSWORD: $(K6_PASSWORD)
+      - task: k6-load-test@0
+        inputs:
+          filename: ${{ parameters.filename }} 
+        env:
+          K6_USERNAME: $(K6_USERNAME)
+          K6_PASSWORD: $(K6_PASSWORD)
 
-    - task: PublishHtmlReport@1
-      condition: succeededOrFailed()
-      inputs:
-        reportDir: "$(System.DefaultWorkingDirectory)/result.html"
-        tabName: "K6 Performance Results"
+      - task: PublishHtmlReport@1
+        condition: succeededOrFailed()
+        inputs:
+          reportDir: "$(System.DefaultWorkingDirectory)/result.html"
+          tabName: "K6 Performance Results"
       
