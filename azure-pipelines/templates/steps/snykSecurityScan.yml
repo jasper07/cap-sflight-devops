@@ -1,3 +1,4 @@
+steps:
 - task: SnykSecurityScan@1
   inputs:
     serviceConnectionEndpoint: "Snyk API"
