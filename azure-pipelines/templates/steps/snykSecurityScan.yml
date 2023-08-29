@@ -1,0 +1,7 @@
+- task: SnykSecurityScan@1
+  inputs:
+    serviceConnectionEndpoint: "Snyk API"
+    testType: "app"
+    monitorWhen: "never"
+    failOnIssues: false
+    projectName: "$(Build.Repository.Name)"

@@ -79,15 +79,8 @@ stages:
       - Deploy
     jobs:
       - job: scan
-        steps:      
-        - task: SnykSecurityScan@1
-          inputs:
-            serviceConnectionEndpoint: 'Snyk API'
-            testType: 'app'
-            monitorWhen: 'never'
-            failOnIssues: false
-            projectName: 'cap-sflight'
-
+        steps:
+        - template: azure-pipelines/templates/steps/snykSecurityScan.yml
   - stage: E2E_tests
     displayName: Perform E2E Tests
     dependsOn:
