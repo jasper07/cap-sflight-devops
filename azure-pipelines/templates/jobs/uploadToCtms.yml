@@ -5,7 +5,6 @@ parameters:
  - name: runJob
    type: string
    default: true
-
 jobs:
   - job: uploadToCtms
     condition: eq(${{ parameters.runJob }}, 'true')

@@ -5,7 +5,6 @@ parameters:
  - name: runJob
    type: string
    default: false
- 
 jobs:
   - job: browserstack
     condition: eq(${{ parameters.runJob }}, 'true')

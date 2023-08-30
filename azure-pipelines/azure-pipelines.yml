@@ -93,15 +93,15 @@ stages:
       - template: templates/jobs/wdi5-test.yml
         parameters: 
           scriptName: wdi5:headless
-          runJob:   ${{ variables.wdi5Tests.enabled }}
+          runJob:  variables['wdi5Tests.enabled']
       - template: templates/jobs/browserstack-test.yml
         parameters: 
           scriptName: wdi5:browserstack
-          runJob: ${{ variables.browserstack.enabled }}
+          runJob: variables['browserstack.enabled']
       - template: templates/jobs/performance-test.yml
         parameters:
           filename: performance/capsflightLaunchpad.js
-          runJob: ${{ variables.performance.enabled }}
+          runJob: variables['performance.enabled']
 
   - stage: Upload
     displayName: Upload to TMS queue
