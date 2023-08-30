@@ -15,7 +15,6 @@ stages:
           vmImage: "ubuntu-latest"
         steps:
           - script: npm ci
-            displayName: NPM install
           - script: npm run lint
             displayName: Lint check all code
 
@@ -80,28 +79,33 @@ stages:
     jobs:
       - job: scan
         steps:
-        - template: azure-pipelines/templates/steps/snykSecurityScan.yml
+        - template: templates/steps/snykSecurityScan.yml
+
   - stage: E2E_tests
     displayName: Perform E2E Tests
     dependsOn:
     - Scan
+    variables:
+      wdi5Tests: true
+      browserstack: false
+      performance: false
     jobs:
-      - template: azure-pipelines/templates/jobs/wdi5-test.yml
+      - template: templates/jobs/wdi5-test.yml
         parameters: 
           scriptName: wdi5:headless
-          runJob: true
-      - template: azure-pipelines/templates/jobs/browserstack-test.yml
+          runJob: $(wdi5Tests)
+      - template: templates/jobs/browserstack-test.yml
         parameters: 
           scriptName: wdi5:browserstack
-          runJob: false
-      - template: azure-pipelines/templates/jobs/performance-test.yml
+          runJob: $(browserstack)
+      - template: templates/jobs/performance-test.yml
         parameters:
           filename: performance/capsflightLaunchpad.js
-          runJob: false
+          runJob: $(performance)
 
   - stage: Upload
     displayName: Upload to TMS queue
     dependsOn:
       - E2E_tests
     jobs:
-      - template: azure-pipelines/templates/jobs/uploadToCtms.yml
+      - template: templates/jobs/uploadToCtms.yml

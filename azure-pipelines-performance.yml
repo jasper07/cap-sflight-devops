@@ -1,9 +1,0 @@
-trigger:
-  - main
-stages:
-  - stage: E2E_test
-    displayName: Run K6 performance tst
-    jobs:
-      - template: azure-pipelines/templates/jobs/performance-test.yml
-        parameters:
-          filename: performance/capsflightLaunchpad.js

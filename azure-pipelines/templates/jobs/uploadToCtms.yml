@@ -1,5 +1,6 @@
 parameters:
   runJob: true
+  ctmsNode: QAS_MTA
 
 jobs:
   - job: uploadToCtms
@@ -11,13 +12,13 @@ jobs:
       - download: current
         artifact: WebApp
       - script: npm run ctmsupload
-        workingDirectory: $(System.DefaultWorkingDirectory)/pipeline
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure-pipelines/ctms
         env:
           TMS_API: $(TMS_API) #ctms-variables
           TOKEN_URL: $(TOKEN_URL) #ctms-variables
           CLIENT_ID: $(CLIENT_ID) #ctms-variables
           CLIENT_SECRET: $(CLIENT_SECRET) #ctms-variables
-          CTMS_NODE: "QAS_MTA"
+          CTMS_NODE: ${{ parameters.ctmsNode }}
           USER_NAME: $(Build.RequestedForEmail)
           DESCRIPTION: "$(Build.DefinitionName): $(Build.SourceVersionMessage)"
           MTA_PATH: "$(Pipeline.Workspace)/WebApp"
