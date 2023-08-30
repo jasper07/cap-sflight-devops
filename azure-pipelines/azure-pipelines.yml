@@ -6,6 +6,10 @@ resources:
       options: --user 0:0 --privileged
 trigger:
   - main
+variables: 
+  wdi5Tests.enabled: true
+  browserstack.enabled: false
+  performance.enabled: false
 stages:
   - stage: Build
     displayName: Build MTAR
@@ -79,23 +83,21 @@ stages:
     jobs:
       - job: scan
         steps:
-        - template: templates/steps/snykSecurityScan.yml
+          - template: templates/steps/snykSecurityScan.yml
 
   - stage: E2E_tests
     displayName: Perform E2E Tests
     dependsOn:
-    - Scan
+      - Scan
     variables:
-      wdi5Tests.enabled: true
-      browserstack.enabled: false
-      performance.enabled: false
+      - group: e2e-variables
     jobs:
       - template: templates/jobs/wdi5-test.yml
-        parameters: 
+        parameters:
           scriptName: wdi5:headless
-          runJob:  variables['wdi5Tests.enabled']
+          runJob: variables['wdi5Tests.enabled']
       - template: templates/jobs/browserstack-test.yml
-        parameters: 
+        parameters:
           scriptName: wdi5:browserstack
           runJob: variables['browserstack.enabled']
       - template: templates/jobs/performance-test.yml
@@ -107,5 +109,7 @@ stages:
     displayName: Upload to TMS queue
     dependsOn:
       - E2E_tests
+    variables:
+      - group: ctms-variables
     jobs:
       - template: templates/jobs/uploadToCtms.yml
