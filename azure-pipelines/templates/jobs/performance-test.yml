@@ -1,7 +1,10 @@
 parameters:
- filename: ''
- runJob: false
-
+ - name: filename
+   type: string 
+   default: ''
+ - name: runJob
+   type: string
+   default: false
 jobs:
   - job: k6loadtest
     condition: eq(${{ parameters.runJob }}, 'true')

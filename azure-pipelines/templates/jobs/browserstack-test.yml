@@ -1,7 +1,11 @@
 parameters:
- scriptName: ''
- runJob: false
-
+ - name: scriptName
+   type: string 
+   default: ''
+ - name: runJob
+   type: string
+   default: false
+ 
 jobs:
   - job: browserstack
     condition: eq(${{ parameters.runJob }}, 'true')

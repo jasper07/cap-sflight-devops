@@ -1,6 +1,10 @@
 parameters:
-  runJob: true
-  ctmsNode: QAS_MTA
+ - name: ctmsNode
+   type: string 
+   default: QAS_MTA
+ - name: runJob
+   type: string
+   default: true
 
 jobs:
   - job: uploadToCtms
