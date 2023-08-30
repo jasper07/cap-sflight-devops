@@ -4,7 +4,7 @@ parameters:
 
 jobs:
   - job: uploadToCtms
-    condition: eq(${{ parameters.runJob }}, true)
+    condition: eq(${{ parameters.runJob }}, 'true')
     steps:
       - checkout: self
       - script: npm install

@@ -5,7 +5,7 @@ parameters:
 
 jobs:
   - job: WDI5Tests
-    condition: eq(${{ parameters.runJob }}, true)
+    condition: eq(${{ parameters.runJob }}, 'true')
     pool:
       vmImage: ${{ parameters.vmImage }}
       # vmImage: macOS-latest
