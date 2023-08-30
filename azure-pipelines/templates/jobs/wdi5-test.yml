@@ -1,7 +1,13 @@
 parameters:
-  vmImage: windows-latest
-  scriptName: wdi5:headless
-  runJob: false
+ - name: vmImage
+   type: string 
+   default: windows-latest
+ - name: scriptName
+   type: string
+   default: wdi5:headless
+ - name: runJob
+   type: string
+   default: false
 
 jobs:
   - job: WDI5Tests
