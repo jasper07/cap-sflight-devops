@@ -79,29 +79,29 @@ stages:
     jobs:
       - job: scan
         steps:
-        - template: templates/steps/snykSecurityScan.yml
+          - template: templates/steps/snykSecurityScan.yml
 
   - stage: E2E_tests
     displayName: Perform E2E Tests
     dependsOn:
-    - Scan
+      - Scan
     variables:
-      wdi5Tests: true
-      browserstack: false
-      performance: false
+      wdi5Tests.enabled: true
+      browserstack.enabled: false
+      performance.enabled: false
     jobs:
       - template: templates/jobs/wdi5-test.yml
-        parameters: 
+        parameters:
           scriptName: wdi5:headless
-          runJob: $(wdi5Tests)
+          runJob: ${{ variables.wdi5Tests.enabled }}
       - template: templates/jobs/browserstack-test.yml
-        parameters: 
+        parameters:
           scriptName: wdi5:browserstack
-          runJob: $(browserstack)
+          runJob: ${{ variables.browserstack.enabled }}
       - template: templates/jobs/performance-test.yml
         parameters:
           filename: performance/capsflightLaunchpad.js
-          runJob: $(performance)
+          runJob: ${{ variables.performance.enabled }}
 
   - stage: Upload
     displayName: Upload to TMS queue
