@@ -1,10 +1,12 @@
+##TODO paramater to map MTAEXT descriptor in Node
+
 parameters:
- - name: ctmsNode
-   type: string 
-   default: QAS_MTA
- - name: runJob
-   type: string
-   default: true
+  - name: ctmsNode #The node you want to load the *.mtar file
+    type: string
+    default: QAS_MTA
+  - name: runJob #Run the job or not
+    type: string
+    default: true
 jobs:
   - job: uploadToCtms
     condition: eq(${{ parameters.runJob }}, 'true')
@@ -21,8 +23,8 @@ jobs:
           TOKEN_URL: $(TOKEN_URL) #ctms-variables
           CLIENT_ID: $(CLIENT_ID) #ctms-variables
           CLIENT_SECRET: $(CLIENT_SECRET) #ctms-variables
-          CTMS_NODE: ${{ parameters.ctmsNode }}
-          USER_NAME: $(Build.RequestedForEmail)
-          DESCRIPTION: "$(Build.DefinitionName): $(Build.SourceVersionMessage)"
-          MTA_PATH: "$(Pipeline.Workspace)/WebApp"
+          CTMS_NODE: ${{ parameters.ctmsNode }} #The Node to upload
+          USER_NAME: $(Build.RequestedForEmail) #Email address of the GIT committer
+          DESCRIPTION: "$(Build.DefinitionName): $(Build.SourceVersionMessage)" #RepoName - GIT Message
+          MTA_PATH: "$(Pipeline.Workspace)/WebApp" #Where to find the MTAR file
         displayName: Upload to CTMS
