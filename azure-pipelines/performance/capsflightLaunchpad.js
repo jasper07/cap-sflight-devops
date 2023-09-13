@@ -9,7 +9,7 @@ import { textSummary } from "https://jslib.k6.io/k6-summary/0.0.1/index.js";
 export const errorRate = new Rate('errors');
 loadDotEnv()
 const BASE_URL = 'https://secondphase.launchpad.cfapps.ap10.hana.ondemand.com';
-const APPID = '00202967-9d5e-484c-ac27-56f294444cfc.sapfecapsflight.sapfecaptravel/processor'
+const APPID = '94b377f6-65a7-4cc3-bbd2-ef6638857738.sapfecapsflight.sapfecaptravel/processor'
 
 // 1. init code
 export let options = {
