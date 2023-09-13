@@ -102,7 +102,7 @@ stages:
           runJob: variables['browserstack.enabled']
       - template: templates/jobs/performance-test.yml
         parameters:
-          filename: performance/capsflightLaunchpad.js
+          filename: $(System.DefaultWorkingDirectory)/azure-pipelines/performance/capsflightLaunchpad.js
           runJob: variables['performance.enabled']
 
   - stage: Upload
