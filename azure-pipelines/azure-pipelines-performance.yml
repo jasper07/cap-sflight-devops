@@ -7,7 +7,7 @@ stages:
     displayName: Perform E2E Tests
     variables:
       - group: e2e-variables
-        jobs:
+    jobs:
       - template: templates/jobs/performance-test.yml
         parameters:
           filename: performance/capsflightLaunchpad.js
