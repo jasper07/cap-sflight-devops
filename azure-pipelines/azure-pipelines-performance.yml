@@ -1,5 +1,4 @@
 name: cap-sflight-devops
-resources:
 trigger:
   - main
 stages:
