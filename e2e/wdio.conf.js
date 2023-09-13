@@ -82,7 +82,7 @@ exports.config = {
                         ? ["--headless"]
                         : process.argv.indexOf("--debug") > -1
                             ? ["window-size=1440,800", "--auto-open-devtools-for-tabs"]
-                            : ["window-size=1920,1080", "--allowed-ips=*", "--whitelisted-ips=*", "--disable-gpu", "--no-sandbox"]
+                            : ["window-size=1920,1080", "--allowed-ips=*", "--whitelisted-ips=*", "--disable-gpu", "--no-sandbox", "--disable-extensions"]
             },
             acceptInsecureCerts: true
             // If outputDir is provided WebdriverIO can capture driver session logs
