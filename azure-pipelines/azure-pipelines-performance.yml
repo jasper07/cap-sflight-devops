@@ -9,5 +9,5 @@ stages:
     jobs:
       - template: templates/jobs/performance-test.yml
         parameters:
-          filename: performance/capsflightLaunchpad.js
+          filename: ./performance/capsflightLaunchpad.js
           runJob: true
