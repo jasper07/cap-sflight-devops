@@ -119,7 +119,7 @@
     "testEnvironment": "node",
     "testTimeout": 20000,
     "modulePathIgnorePatterns": [
-      "<rootDir>/e2e"
+      "<rootDir>/azure-pipelines/e2e"
     ],
     "collectCoverage": true,
     "collectCoverageFrom": [
