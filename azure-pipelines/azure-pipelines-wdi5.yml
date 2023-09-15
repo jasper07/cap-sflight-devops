@@ -10,4 +10,4 @@ stages:
       - template: templates/jobs/wdi5-test.yml
         parameters:
           scriptName: wdi5:headless
-          runJob: variables['wdi5Tests.enabled']
+          runJob: true
