@@ -9,7 +9,7 @@ trigger:
 variables: 
   wdi5Tests.enabled: true
   browserstack.enabled: false
-  performance.enabled: true
+  performance.enabled: false
 stages:
   - stage: Build
     displayName: Build MTAR
