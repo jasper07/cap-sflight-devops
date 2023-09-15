@@ -18,7 +18,7 @@ jobs:
       - pwsh: |
           npm install --omit=dev
           npm run ${{ parameters.scriptName }}
-        workingDirectory: $(System.DefaultWorkingDirectory)/e2e
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure-pipelines/e2e
         env:
           wdi5_username: $(wdi5_username)
           wdi5_password: $(wdi5_password)

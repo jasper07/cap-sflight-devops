@@ -51,29 +51,29 @@ describe("FE basics", () => {
         })
     })
 
-    // it("should see the Object Pages load and then returns to list", async () => {
-    //     await FioriElementsFacade.execute((Given, When, Then) => {
-    //         When.onTheMainPage.onTable().iPressRow(1)
-    //         Then.onTheDetailPage.iSeeThisPage()
+    it("should see the Object Pages load and then returns to list", async () => {
+        await FioriElementsFacade.execute((Given, When, Then) => {
+            When.onTheMainPage.onTable().iPressRow(1)
+            Then.onTheDetailPage.iSeeThisPage()
 
-    //         When.onTheDetailPage.onTable({ property: "to_Booking" }).iPressRow({ BookingID: "1" });
-    //         Then.onTheItemPage.iSeeThisPage();
+            When.onTheDetailPage.onTable({ property: "to_Booking" }).iPressRow({ BookingID: "1" });
+            Then.onTheItemPage.iSeeThisPage();
 
-    //     })
+        })
 
-    //     await browser.switchToParentFrame()
-    //     await FioriElementsFacadeLaunchpad.execute((Given, When, Then) => {
+        await browser.switchToParentFrame()
+        await FioriElementsFacadeLaunchpad.execute((Given, When, Then) => {
 
-    //         When.onTheShell.iNavigateBack()
-    //         When.onTheShell.iNavigateBack()
+            When.onTheShell.iNavigateBack()
+            When.onTheShell.iNavigateBack()
 
-    //     })
-    //     await browser.switchToFrame(0)
+        })
+        await browser.switchToFrame(0)
 
-    //     await FioriElementsFacade.execute((Given, When, Then) => {
-    //         Then.onTheMainPage.iSeeThisPage()
-    //     })
-    // })
+        await FioriElementsFacade.execute((Given, When, Then) => {
+            Then.onTheMainPage.iSeeThisPage()
+        })
+    })
 
     it("should create a travel request", async () => {
         let beginDate = new Date();
@@ -176,24 +176,6 @@ describe("FE basics", () => {
         })
     })
 
-    it("should see the Object Pages load and then returns to list", async () => {
-        await FioriElementsFacade.execute((Given, When, Then) => {
-            When.onTheMainPage.onTable().iPressRow(1)
-            Then.onTheDetailPage.iSeeThisPage()
 
-        })
-
-        await browser.switchToParentFrame()
-        await FioriElementsFacadeLaunchpad.execute((Given, When, Then) => {
-
-            When.onTheShell.iNavigateBack()
-
-        })
-        await browser.switchToFrame(0)
-
-        await FioriElementsFacade.execute((Given, When, Then) => {
-            Then.onTheMainPage.iSeeThisPage()
-        })
-    })
 
 })
