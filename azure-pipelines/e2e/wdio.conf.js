@@ -165,7 +165,7 @@ exports.config = {
     // see also: https://webdriver.io/docs/dot-reporter
     reporters: ["spec",
         ["timeline", {
-            outputDir: '.././test-results/e2e/',
+            outputDir: '../.././test-results/e2e/',
             embedImages: true,
             images: {
                 quality: 80,
