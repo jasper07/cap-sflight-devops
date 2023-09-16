@@ -1,0 +1,10 @@
+cap-sflight-devops
+Copyright 2020 SAP SE
+
+This product includes software developed at
+SAP SE (https://www.sap.com).
+
+The following are the significant changes I made to the project:
+
+- change the package json to use a build which use SQLlite instead of HANA Cloud
+- Added functionality for demonstrating how to use SAP CAP application with Azure Devops Pipelines
