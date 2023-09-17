@@ -406,7 +406,7 @@ jobs:
 Below you can see the run summary for WDI5 tests running the BTP Workzone Launchpad test across a large number of devices.
 ![browerstack-multiple-devices](azure-pipelines/docs/browerstack-multiple-devices.png)
 
-You can drill down and go directly to the browserstack and see a replay of the individual tests.
+You can drill down and go directly to the browserstack and see a replay of the individual tests.   
 ![browerstack-drill-in-report](azure-pipelines/docs/browerstack-drill-in-report.png)
 
 **[Back to the Top](#advanced-pipeline)**
