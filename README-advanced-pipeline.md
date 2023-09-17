@@ -24,16 +24,16 @@ The travel processing application is now in production and is being used by thou
 4. **Demonstration**: Developers can see the full CI/CD process in action, making it easier for new team members to learn and adapt.
 5. **Reusable Template**: The pipeline serves as a reusable template for other projects within the enterprise, promoting consistency and best practices across the organization.
 
-![Advanced Pipeline](azure-pipelines\docs\advanced-pipeline.png)
+![Advanced Pipeline](azure-pipelines/docs/advanced-pipeline.png)
 
 [azure-pipelines-advanced.yml](azure-pipelines\azure-pipelines-advanced.yml)
 
-![Advanced Pipeline Running](azure-pipelines\docs\advanced-pipeline-running.png)
+![Advanced Pipeline Running](azure-pipelines/docs/advanced-pipeline-running.png)
 
 ## Build
 As mentioned before this repository builds on a copy of the [SAP-samples/cap-sflight](https://github.com/SAP-samples/cap-sflight) application, the repository already has working github actions, inside which is a [node.js.yml](.github/workflows/node.js.yml) which contains a steps i use in the BUILD stage
 
-![reuse github actions for Build stage](azure-pipelines\docs\advanced-pipeline-build-reuse.png)
+![reuse github actions for Build stage](azure-pipelines/docs/advanced-pipeline-build-reuse.png)
 
 ### Lint
 The lint settings are as provided in the CAP-SFLIGHT sample
@@ -99,7 +99,7 @@ in the pipeline yaml to [Review test results](https://learn.microsoft.com/en-us/
 
 ```
 
-![Unit Test Results](azure-pipelines\docs\advanced-pipeline-tests-result.png)
+![Unit Test Results](azure-pipelines/docs/advanced-pipeline-tests-result.png)
 
 [Review code coverage results](https://learn.microsoft.com/en-us/azure/devops/pipelines/test/review-code-coverage-results?view=azure-devops)
 
@@ -117,7 +117,7 @@ in the pipeline yaml to [Review test results](https://learn.microsoft.com/en-us/
 
 ```
 
-![Code Coverage Results](azure-pipelines\docs\advanced-pipeline-coverage-result.png)
+![Code Coverage Results](azure-pipelines/docs/advanced-pipeline-coverage-result.png)
 
 see [CDS Testing](https://cap.cloud.sap/docs/node.js/cds-test).  
 **[Back to the Top](#advanced-pipeline)**
@@ -159,7 +159,7 @@ config.set({
 
 ```
 
-![Integration Tests Results](azure-pipelines\docs\advanced-pipeline-results-integration.png)  
+![Integration Tests Results](azure-pipelines/docs/advanced-pipeline-results-integration.png)  
 see SAPUI5 [Test Automation](https://sapui5.hana.ondemand.com/#/topic/ae448243822448d8ba04b4784f4b09a0).  
 
 **[Back to the Top](#advanced-pipeline)**
@@ -237,7 +237,7 @@ Note above the use of the **cloudfoundry-variables** variable group.
 
 A number of variable groups have been created for the different values and secrets needed.
 
-![advanced-pipeline-library-variable-groups.png](azure-pipelines\docs\advanced-pipeline-library-variable-groups.png)
+![advanced-pipeline-library-variable-groups.png](azure-pipelines/docs/advanced-pipeline-library-variable-groups.png)
 see [Add & use variable groups](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml).   
 **[Back to the Top](#advanced-pipeline)**
 ### Scan
@@ -334,10 +334,10 @@ steps:
     projectName: "$(Build.Repository.Name)"
 ```
 
-![advanced-pipeline-security-scan.png](azure-pipelines\docs\advanced-pipeline-security-settings.png)  
+![advanced-pipeline-security-scan.png](azure-pipelines/docs/advanced-pipeline-security-settings.png)  
 Register a service connection in the Project Settings and give it the Snyk API token you created.
 
-![advanced-pipeline-security-scan.png](azure-pipelines\docs\advanced-pipeline-security-scan.png)  
+![advanced-pipeline-security-scan.png](azure-pipelines/docs/advanced-pipeline-security-scan.png)  
 Here is an example of a known vulnerability in scan results.  
 **[Back to the Top](#advanced-pipeline)**
 
