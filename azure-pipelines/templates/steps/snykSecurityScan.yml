@@ -1,8 +1,14 @@
+parameters:
+ - name: runJob
+   type: string
+   default: false
+
 steps:
 - task: SnykSecurityScan@1
+  condition: eq(${{ parameters.runJob }}, 'true')
   inputs:
     serviceConnectionEndpoint: "Snyk API"
     testType: "app"
     monitorWhen: "never"
-    failOnIssues: false
+    failOnIssues: true
     projectName: "$(Build.Repository.Name)"

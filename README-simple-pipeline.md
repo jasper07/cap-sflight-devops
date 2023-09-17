@@ -1,8 +1,12 @@
 
 ## Simple Pipeline
+*Hypothetical Scenario*:
+At the inception of the project, a single developer named Sarah is tasked with building the core functionality of the travel processing application. Sarah needs fast feedback on her code changes to ensure they integrate seamlessly into the project.
+
 Using a simple build and deploy CI/CD pipeline has many advantages
-* by automating a manual process it gives back time to the developer, on average the build and deploy process takes 4 minutes, the developer is notified by email of success or failure, the time saved encourages the developer to do more often
-* the pipeline can be used as building block for adding syntax checking and testing where needed
+1. **Automation and Time Savings**: this pipeline automates manual processes, saving developers time (average 4 minutes) and notifies them via email of success or failure. It encourages more frequent use.
+2. **Reusable Building Blocks**: this pipeline can be a foundational building block for future CI/CD pipelines, allowing developers to extend its functionality as needed.
+3. **Demonstration of Capabilities**: this pipeline primarily focuses on basic build and deploy processes, it showcases the power of automation and its impact on developer productivity.  
 
 
 ![Simple Pipeline](azure-pipelines\docs\simple-pipeline.png)

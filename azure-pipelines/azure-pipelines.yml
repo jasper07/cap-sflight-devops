@@ -6,10 +6,12 @@ resources:
       options: --user 0:0 --privileged
 trigger:
   - main
-variables: 
-  wdi5Tests.enabled: true
+variables:
+  securityscan.enabled: false
+  wdi5Tests.enabled: false
   browserstack.enabled: false
-  performance.enabled: true
+  performance.enabled: false
+  uploadToCtms.enabled: false
 stages:
   - stage: Build
     displayName: Build MTAR
@@ -84,6 +86,8 @@ stages:
       - job: scan
         steps:
           - template: templates/steps/snykSecurityScan.yml
+            parameters:
+                runJob: variables['securityscan.enabled']
 
   - stage: E2E_tests
     displayName: Perform E2E Tests
@@ -113,3 +117,5 @@ stages:
       - group: ctms-variables
     jobs:
       - template: templates/jobs/uploadToCtms.yml
+        parameters:
+          runJob: variables['uploadToCtms.enabled']
