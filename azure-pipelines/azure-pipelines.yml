@@ -6,12 +6,12 @@ resources:
       options: --user 0:0 --privileged
 trigger:
   - main
-variables:
-  securityscan.enabled: false
-  wdi5Tests.enabled: false
+variables:  #toggle on and off needed jobs 
+  securityscan.enabled: true
+  wdi5Tests.enabled: true
   browserstack.enabled: false
-  performance.enabled: false
-  uploadToCtms.enabled: false
+  performance.enabled: true
+  uploadToCtms.enabled: true
 stages:
   - stage: Build
     displayName: Build MTAR
