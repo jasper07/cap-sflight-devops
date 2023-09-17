@@ -546,10 +546,10 @@ jobs:
 ```
 
 
-Job log shows 'Transport request 463 was created in Node QAS_MTA.
+Job log shows 'Transport request 463 was created in Node QAS_MTA.  
 ![alt text](azure-pipelines/docs/ctms_joblog.PNG "Title")
 
-QAS_MTA CTMS Node note the Transport Description is made up of the "pipeline name" and the "commit message" and the Owner is the person who made the commit.
+QAS_MTA CTMS Node note the Transport Description is made up of the "pipeline name" and the "commit message" and the Owner is the person who made the commit.  
 ![alt text](azure-pipelines/docs/ctms_qa_queue.PNG "Title")  
 NOTE the Transport Description is the name of the project - and the git commit that triggered the build.
 
