@@ -1,8 +1,8 @@
 parameters:
- - name: scriptName
+ - name: scriptName         # the script to run
    type: string 
    default: ''
- - name: runJob
+ - name: runJob             # run the job
    type: string
    default: false
 jobs:
@@ -15,23 +15,23 @@ jobs:
       - script: |
           npm install
           npm run ${{ parameters.scriptName }} 
-        workingDirectory: $(System.DefaultWorkingDirectory)/e2e
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure-pipelines/e2e # where tests are
         env:
-          wdi5_username: $(wdi5_username)
-          wdi5_password: $(wdi5_password)
+          wdi5_username: $(wdi5_username)     # needed to authenticate BTP
+          wdi5_password: $(wdi5_password)     # needed to authenticate BTP
           BASE_URL: $(URL_LPD)
           BROWSERSTACK_BUILD_NAME: $(BROWSERSTACK_BUILD_NAME)
         displayName: "Run BrowserStack"
 
-      - task: PublishPipelineArtifact@1
-        condition: succeededOrFailed()
+      - task: PublishPipelineArtifact@1  #save the logs 
+        condition: succeededOrFailed() 
         inputs:
           targetPath: "$(System.DefaultWorkingDirectory)/e2e/logs"
           artifactType: "pipeline"
           artifactName: "logs"
         displayName: "Publish wdi5 logs"
 
-      - task: BrowserStackResults@1
+      - task: BrowserStackResults@1  # report on tests
         condition:
         inputs:
           browserstackProduct: "automate"

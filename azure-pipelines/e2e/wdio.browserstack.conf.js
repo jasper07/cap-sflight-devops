@@ -13,7 +13,6 @@ const desktopCapabilities = {
     }
 };
 
-
 const authentication = {
     "wdi5:authentication": {
         provider: "BTP", //> mandatory
