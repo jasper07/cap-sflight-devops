@@ -343,7 +343,9 @@ Here is an example of a known vulnerability in scan results.
 
 ## E2E Tests
 
-### WDI5 BTP Workzone Tests 
+### WDI5 BTP Workzone Tests
+
+![wdi5Edge_Chrome.gif](azure-pipelines/docs/WDI5_Workzone_Edge_Chrome.gif)  
 
 **[Back to the Top](#advanced-pipeline)**
 ### Browserstack Tests 
