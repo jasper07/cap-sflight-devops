@@ -27,7 +27,9 @@ The travel processing application is now in production and is being used by thou
 
 ![Advanced Pipeline](azure-pipelines\docs\advanced-pipeline.png)
 
-[azure-pipelines.yml](azure-pipelines\azure-pipelines.yml)
+[azure-pipelines-advanced.yml](azure-pipelines\azure-pipelines-advanced.yml)
+
+![Advanced Pipeline Running](azure-pipelines\docs\advanced-pipeline-running.png)
 
 ## Build
 
@@ -60,6 +62,7 @@ With unit tests
 In the pipeline I used the exising unit tests from the copied application, to get the test results and code coverage to show in the pipeline run summary, I had to make a couple of small changes, I updated the [package.json](package.json) to ignore the wdi5 test files, different runner, and output the test results to the junit format, and for the code coverage gave some settings for acceptable coverage and where to put the coverage results.
 
 ```json
+  // File: package.json
   "jest": {
     ...
     "modulePathIgnorePatterns": [
@@ -90,6 +93,7 @@ in the pipeline yaml to [Review test results](https://learn.microsoft.com/en-us/
 [PublishTestResults@2](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/publish-test-results-v2?view=azure-pipelines) - Publish test results v2 task was used.
 
 ```yaml
+  # File: azure-pipelines/azure-pipelines-advanced.yml
   - task: PublishTestResults@2
     displayName: Publish Test Results
     inputs:
@@ -108,6 +112,7 @@ in the pipeline yaml to [Review test results](https://learn.microsoft.com/en-us/
 [PublishCodeCoverageResults@1](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/publish-code-coverage-results-v1?view=azure-pipelines) - Publish code coverage task was used.
 
 ```yaml
+  # File: azure-pipelines/azure-pipelines-advanced.yml
   - task: PublishCodeCoverageResults@1
     displayName: Publish Code Coverage Results
     inputs:
@@ -139,6 +144,7 @@ npm install --prefix ./app/travel_processor karma-coverage karma-junit-reporter 
 And to get the output of the tests to be published into the test results and coverage results as mentioned above, in the [karma.conf.js](app/travel_processor/karma.conf.js) the reporters neededd to be added and the output to sent to the same directories as unit tests use. Note there is no custom code in the Fiori apps so no coverage results.
 
 ```js
+// File: app/travel_processor/karma.conf.js
 config.set({
   ..
   reporters: config.ci ? ['progress', 'junit', 'coverage'] : ["progress"],
@@ -165,17 +171,14 @@ see SAPUI5 [Test Automation](https://sapui5.hana.ondemand.com/#/topic/ae44824382
 
 Added the mbt npm package to the project, could easily have added the command in the project. A simple command to use the mta-sqlite.yaml, used the new @cap-js/sqlite, just didnt want the hassle of turning on and off HANA Cloud instance in the BTP free tier.
 
-package.json
 
 ```sh
+# package.json
 "build:cf:sqlite": "cp mta-sqlite.yaml mta.yaml && mbt build && rm mta.yaml"
-
-
 ```
 
-azure-pipelines.yml
-
 ```sh
+# File: azure-pipelines/azure-pipelines-advanced.yml
 npm install mbt
 npm run build:cf:sqlite
 
@@ -184,6 +187,7 @@ npm run build:cf:sqlite
 To share the MTAR file between stages see [Publish and download pipeline Artifacts](https://learn.microsoft.com/en-us/azure/devops/pipelines/artifacts/pipeline-artifacts?view=azure-devops&tabs=yaml)
 
 ```yaml
+# File: azure-pipelines-advanced.yml
 steps:
 - publish: $(System.DefaultWorkingDirectory)/bin/WebApp
   artifact: WebApp
@@ -199,6 +203,7 @@ steps:
 The deploy depends on the success of the build stage, it uses the SAP Piper cfcli docker image to give the pipeline the Cloud Foundry CLI capability needed for deploying. The following declares the container cfcli which points to the [ppiper/cf-cli](https://hub.docker.com/r/ppiper/cf-cli) docker image.
 
 ```yaml
+# File: azure-pipelines/azure-pipelines-advanced.yml
 containers:
   - container: cfcli
     image: "ppiper/cf-cli"
@@ -209,6 +214,7 @@ containers:
 Then in the deploy job the vmimage usses the cfcli container and the Cloud Foundry CLI is available to be used in a bash script.
 
 ```yaml
+# File: azure-pipelines/azure-pipelines-advanced.yml
 - stage: Deploy
   displayName: Deploy to DEV
   variables:
@@ -300,7 +306,7 @@ Benefits of using such as tool -
 The SnykSecurityScan task simple to use. See [Example of a Snyk task to test a node.js (npm)-based application](https://docs.snyk.io/integrations/snyk-ci-cd-integrations/azure-pipelines-integration/example-of-a-snyk-task-to-test-a-node.js-npm-based-application)
 
 ```yaml
-# File: azure-pipelines/azure-pipelines.yml
+# File: azure-pipelines/azure-pipelines-advanced.yml
 variables:        # a collection of flags to turn on and off the jobs and steps
   securityscan.enabled: true # run the security scan
 
