@@ -3,8 +3,6 @@ trigger:
   - main
   - stage: Scan
     displayName: Security Scan
-    dependsOn:
-      - Deploy
     jobs:
       - job: scan
         steps:
