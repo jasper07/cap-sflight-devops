@@ -1,0 +1,13 @@
+name: cap-sflight-devops
+trigger:
+  - main
+  - stage: Scan
+    displayName: Security Scan
+    dependsOn:
+      - Deploy
+    jobs:
+      - job: scan
+        steps:
+          - template: templates/steps/snykSecurityScan.yml
+            parameters:
+                runJob: true
