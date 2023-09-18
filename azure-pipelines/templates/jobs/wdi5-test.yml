@@ -25,6 +25,12 @@ jobs:
           BASE_URL: $(URL_LPD)
         displayName: WDI5 test
 
+      - task: PublishHtmlReport@1
+        condition: succeededOrFailed()
+        inputs:
+          reportDir: "$(System.DefaultWorkingDirectory)/test-results/e2e/timeline-report.html"
+          tabName: "WDI5 Tests"
+
       - task: PublishPipelineArtifact@1
         condition: failed()
         inputs:
@@ -32,9 +38,3 @@ jobs:
           artifactType: "pipeline"
           artifactName: "logs"
         displayName: "Publish logs"
-
-      - task: PublishHtmlReport@1
-        condition: succeededOrFailed()
-        inputs:
-          reportDir: "$(System.DefaultWorkingDirectory)/test-results/e2e/timeline-report.html"
-          tabName: "WDI5 Tests"
