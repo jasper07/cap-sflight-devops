@@ -342,14 +342,89 @@ Here is an example of a known vulnerability in scan results.
 **[Back to the Top](#advanced-pipeline)**
 
 ## E2E Tests
+**End-to-end testing (E2E testing)** is a software testing methodology that evaluates the entire application from start to finish to ensure that all components and integrations work together as expected. It simulates real-world user scenarios to verify that the software behaves correctly in a production-like environment. End-to-end testing is typically performed on a complete, integrated system to validate its functionality, performance, and reliability. 
+
+Benefits of End-to-End Testing:  
+* **Improved Quality**: E2E testing ensures that the software meets user requirements and behaves correctly, enhancing its overall quality and reliability.  
+* **Early Issue Detection**: By detecting issues early in the development cycle, E2E testing reduces the cost and effort required to fix defects.  
+* **Enhanced User Experience**: It helps create a better user experience by identifying and resolving usability and functionality issues.  
+* **Increased Confidence**: Running E2E tests before deployment provides confidence that the application works as expected, reducing the risk of post-deployment issues.  
+* **Reduced Manual Testing**: Automation of E2E tests can significantly reduce the need for manual testing, making the testing process more efficient.  
+
+Different Types of End-to-End Testing:
+* **UI Testing:** UI testing focuses on the user interface of your application. It verifies that the user interface elements are correctly rendered and that user interactions produce the expected results. 
+* **API Testing:** API testing involves testing the interactions between different components of your application through APIs (Application Programming Interfaces). This ensures that data is correctly transmitted and processed between services. Tools like Postman, REST Assured, or automated scripting in programming languages (e.g., Python) can be used for API testing.
+* **Load Testing:** Load testing assesses your application's performance under a specific load, typically by simulating a large number of concurrent users or requests.
+* **Cross-Browser/Compatibility Testing:** This type of testing ensures that your application works consistently across different web browsers and versions. Tools like BrowserStack and Sauce Labs can help with cross-browser testing.
+* **Performance Testing:** Besides load testing, performance testing also includes stress testing, scalability testing, and endurance testing to evaluate the system's performance under different conditions
+
+Below show a couple of examples, UI, Cross-Browser and Performanc Testing.
 
 ### WDI5 BTP Workzone Tests
+[wdi5](https://ui5-community.github.io/wdi5/#/) is designed to run cross-platform end-to-end tests on a UI5 application, with selectors compatible to OPA5.
+
+* **Automated Testing:** wdi5 test run in a pipeline, ensures that the application works as expected in different environments and devices.    
+* **Early Bug Detection:** By catching bugs and issues early , you can reduce the cost and effort required to fix them compared to finding them in later stages.  
+* **Parallel Execution** wdi5 supports parallel test execution, allowing you to run tests concurrently on multiple browser instances, which significantly reduces testing time and speeds up your CI/CD pipeline.  
+Some really good instructions for [Using the test library with SAP Build Workzone, standard edition](https://ui5-community.github.io/wdi5/#/fe-testlib?id=using-the-test-library-with-sap-build-workzone-standard-edition).
 
 ![wdi5Edge_Chrome.gif](azure-pipelines/docs/WDI5_Workzone_Edge_Chrome.gif)  
+Above shows the wdi5 tests runninng parrallel on both Edge and Chrome.
+
+To run wdi5 call a script in the [package.json](/azure-pipelines/e2e/package.json).
+```json
+   "scripts": {
+    "wdi5:headless": "wdio run ./wdio.conf.js --headless",
+    "wdi5:edge:headless": "wdio run ./wdio.edge.conf.js --headless",
+    "wdi5:browserstack": "wdio run ./wdio.browserstack.conf.js"
+```
+Below is the job template, **PublishHtmlReport@1** publishes the timeline report.
+```yaml
+# File: azure-pipelines/templates/steps/wdi5-test.yml
+ - name: scriptName
+   type: string
+   default: wdi5:headless
+ - name: runJob
+   type: string
+   default: false
+jobs:
+  - job: WDI5Tests
+    condition: eq(${{ parameters.runJob }}, 'true')
+    pool:
+      vmImage: ${{ parameters.vmImage }}
+      # vmImage: macOS-latest
+    steps:
+      - pwsh: |
+          npm install --omit=dev
+          npm run ${{ parameters.scriptName }}
+        workingDirectory: $(System.DefaultWorkingDirectory)/azure-pipelines/e2e
+        env:
+          wdi5_username: $(wdi5_username)
+          wdi5_password: $(wdi5_password)
+          BASE_URL: $(URL_LPD)
+        displayName: WDI5 test
+
+      - task: PublishHtmlReport@1
+        condition: succeededOrFailed()
+        inputs:
+          reportDir: "$(System.DefaultWorkingDirectory)/test-results/e2e/timeline-report.html"
+          tabName: "WDI5 Tests"
+```
+
+
+![wdi5 test results](azure-pipelines/docs/wdi5-test-results.png)
+Above is the timeline report for the wdi5 can be configured to take screenshots and videos.
+
 
 **[Back to the Top](#advanced-pipeline)**
 ### Browserstack Tests 
-In this job we integrate BrowserStack to run our WDI5 BTP Workzone tests accross a variety of devices and browsers, eg Iphone, Android, Ipad etc.
+This job uses BrowserStack to run our WDI5 BTP Workzone tests accross a variety of devices and browsers, eg Iphone, Android, Ipad etc.
+
+* **Cross-Browser and Cross-Platform Testing:** One of the primary advantages of using BrowserStack is its ability to simulate a wide variety of web browsers, browser versions, and operating systems. This ensures that your application works consistently across different browser and platform combinations.   
+* **Device and OS Coverage:** BrowserStack provides access to a vast number of real mobile devices and operating systems, allowing you to test your mobile applications on a wide range of devices. This is particularly valuable for mobile app E2E testing, where device fragmentation can be a challenge.  
+* **Screenshots and Video Recording:** BrowserStack provides features to capture screenshots and record video during test executions. This can be valuable for debugging and documenting issues.  
+* **Geographic Testing:** You can perform E2E tests from different geographic locations, helping you identify and address potential performance and latency issues that users in different regions might experience.  
+* **Parallel Testing:** BrowserStack allows you to run E2E tests in parallel on multiple browser and device combinations, significantly reducing test execution time. This is crucial for speeding up your CI/CD pipeline.
 
 [https://www.browserstack.com/](https://www.browserstack.com/) offers a free trial, which gives 100 minutes of automated browser testing, you can sign up and get an Access Key and Username.  
 Go to the market place and find [BrowserStack Azure DevOps Extension](https://marketplace.visualstudio.com/items?itemName=browserstackcom.browserstack-vsts-extension) here you will find  the instructions [Integrate BrowserStack Automate with Azure Pipelines](https://www.browserstack.com/docs/automate/selenium/azure-pipelines).
