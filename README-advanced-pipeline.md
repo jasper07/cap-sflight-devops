@@ -395,7 +395,7 @@ it("should create a travel request", async () => {
 ```
 
 
-To run wdi5 call a script in the [package.json](/azure-pipelines/e2e/package.json).
+To run wdi5 call a script in the [package.json](/azure-pipelines/e2e/package.json), check the file [.env.template](azure-pipelines/e2e/.env.template) for needed environment variables.
 ```json
    "scripts": {
     "wdi5:headless": "wdio run ./wdio.conf.js --headless",
