@@ -1,6 +1,5 @@
-   │   │   │   └── capsflightLaunchpad.js
 #cap sflight devops
-# Welcome to the CAP SFLIGHT Devops
+# Welcome to the CAP SFLIGHT Devops example repo
 
 This repository is intended to be used a reference for how to build Azure Devops Pipelines on top of applications built with the [SAP Cloud Application Programming Model (CAP)](https://cap.cloud.sap).
 
