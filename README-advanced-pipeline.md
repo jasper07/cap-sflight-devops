@@ -366,10 +366,34 @@ Below show a couple of examples, UI, Cross-Browser and Performanc Testing.
 * **Automated Testing:** wdi5 test run in a pipeline, ensures that the application works as expected in different environments and devices.    
 * **Early Bug Detection:** By catching bugs and issues early , you can reduce the cost and effort required to fix them compared to finding them in later stages.  
 * **Parallel Execution** wdi5 supports parallel test execution, allowing you to run tests concurrently on multiple browser instances, which significantly reduces testing time and speeds up your CI/CD pipeline.  
-Some really good instructions for [Using the test library with SAP Build Workzone, standard edition](https://ui5-community.github.io/wdi5/#/fe-testlib?id=using-the-test-library-with-sap-build-workzone-standard-edition).
+
+Some really good instructions for [Using the test library with SAP Build Workzone, standard edition](https://ui5-community.github.io/wdi5/#/fe-testlib?id=using-the-test-library-with-sap-build-workzone-standard-edition) with the latest version of wdi5.
 
 ![wdi5Edge_Chrome.gif](azure-pipelines/docs/WDI5_Workzone_Edge_Chrome.gif)  
 Above shows the wdi5 tests runninng parrallel on both Edge and Chrome.
+
+The [test code](azure-pipelines/e2e/webapp/test/e2e/Journey.test.js) is simple if you worked with Opa5 very familiar.
+```javascript
+// File: azure-pipelines/e2e/webapp/test/e2e/Journey.test.js
+it("should create a travel request", async () => {
+    let beginDate = new Date();
+    let endDate = new Date(Date.now() + 6.048e+8);
+    await FioriElementsFacade.execute((Given, When, Then) => {
+        Then.onTheMainPage.iSeeThisPage();
+        Then.onTheMainPage.onTable().iCheckAction("Create", { enabled: true });
+
+        // Click on Create button
+        When.onTheMainPage.onTable().iExecuteAction("Create");
+        Then.onTheDetailPage.iSeeObjectPageInEditMode();
+        When.onTheDetailPage.iGoToSection("General Information");
+
+        // Value help Agency ID
+        When.onTheDetailPage
+            .onForm({ section: "Travel", fieldGroup: "TravelData" })
+            .iOpenValueHelp({ property: "to_Agency_AgencyID" });
+        When.onTheDetailPage.onValueHelpDialog().iSelectRows({ 0: "070006" });
+```
+
 
 To run wdi5 call a script in the [package.json](/azure-pipelines/e2e/package.json).
 ```json
