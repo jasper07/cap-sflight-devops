@@ -34,6 +34,7 @@ The travel processing application is now in production and is being used by thou
 As mentioned before this repository builds on a copy of the [SAP-samples/cap-sflight](https://github.com/SAP-samples/cap-sflight) application, the repository already has working github actions, inside which is a [node.js.yml](.github/workflows/node.js.yml) file which contains many of the steps used in the BUILD stage of the advanced pipeline.
 
 ![reuse github actions for Build stage](azure-pipelines/docs/advanced-pipeline-build-reuse.png)
+**[Back to the Top](#advanced-pipeline)**
 
 ### Lint
 The lint settings are as provided in the CAP-SFLIGHT sample
