@@ -512,7 +512,7 @@ You can drill down from the pipeline report and go directly to the browserstack 
 
 **[Back to the Top](#advanced-pipeline)**
 ### K6 Performance Tests
-This task runs k6 performance tests against the application deployed to the BTP Workzone Standard Launchpad, testing this way allows you truly simulate at scale how users would interact with the applicaion under such conditions.
+This task runs k6 performance tests against the application deployed to the BTP Workzone Standard Launchpad, testing this way allows you truly simulate at scale how users would interact with the application under such conditions.
 
 [k6](https://k6.io/) is a free and open-source testing tool for load and performance testing of APIs, microservices, and websites.
 
@@ -559,11 +559,27 @@ jobs:
           tabName: "K6 Performance Results"
 ``` 
 
-k6 code is very easy to write, below show how simulate the creation of a Travel request calling the BTP Workzone app using HTTP calls only .  
+k6 code is very easy to write, below shows the code to simulate the creation of a Travel request calling the BTP Workzone app using HTTP calls only .  
 ![k6 code](azure-pipelines/docs/k6-code.png)  
 
-Below is a simple example of how to visulaize the k6 results in Pipeline run results.  For other ways see [Ways to visualize k6 results](https://k6.io/blog/ways-to-visualize-k6-results/).  
-Note in the two minutes the performance test ran, it performed 3684 requests, the fastest being 29.46 miliseconds, maximum was 3.2 seconds, 95% of all calls was an avaerage of 132.70 milliseconds.
+Below is a simple example of how to visulalize the k6 results in the Pipeline run results.  For other ways see [Ways to visualize k6 results](https://k6.io/blog/ways-to-visualize-k6-results/).  
+
+``` javascript
+export let options = {
+    stages: [
+        { target: 10, duration: "30s" }, // Linearly ramp up from 1 to 10 VUs (virtual users) during first minute
+        { target: 10, duration: "30s" }, // Hold at 10 VUs for the next 30 seconds
+        { target: 0, duration: "30s" }     // Linearly ramp down from 10 to 0 VUs over the last 30 seconds
+        // // Total execution time will be ~90 seconds
+    ],
+    thresholds: {
+        "http_req_duration": ["p(95)<500"], // We want the 95th percentile of all HTTP request durations to be less than 500ms
+        "http_req_duration{staticAsset:yes}": ["p(99)<250"], // Requests with the staticAsset tag should finish even faster eg SAPUI5 CDN
+    }
+};
+``` 
+Above is the setup for the test, 3 stages of 30 seconds, the first stage we ramp up to 10 virtual users, we hold at 10 for 30 seconds and then ramp down for 30 seconds.
+Looking at the report, for the 90 seconds the performance test ran, it s performed 3684 requests, the fastest being 29.46 miliseconds, maximum was 3.2 seconds, 95% of all calls was an avaerage of 132.70 milliseconds. In the thresholds we set the 95% of all calls needed to be less than 500ms which they were so it passed. k6 is very handy for testing the [application-autoscaler](https://discovery-center.cloud.sap/serviceCatalog/application-autoscaler?service_plan=standard&region=all&commercialModel=cloud) settings.
 ![k6 Report](azure-pipelines/docs/k6-report.png) 
 
 **[Back to the Top](#advanced-pipeline)**
