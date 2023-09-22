@@ -33,7 +33,7 @@ The travel processing application is now in production and is being used by thou
 ## Build
 As mentioned before this repository builds on a copy of the [SAP-samples/cap-sflight](https://github.com/SAP-samples/cap-sflight) application, the repository already has working github actions, inside which is a [node.js.yml](.github/workflows/node.js.yml) file which contains many of the steps used in the BUILD stage of the advanced pipeline.
 
-![reuse github actions for Build stage](azure-pipelines/docs/advanced-pipeline-build-reuse.png)
+![reuse github actions for Build stage](azure-pipelines/docs/advanced-pipeline-build-reuse.png)  
 **[Back to the Top](#advanced-pipeline)**
 
 ### Lint
@@ -647,7 +647,7 @@ jobs:
 ```
 
 
-Job log shows 'Transport request 463 was created in Node QAS_MTA.  
+Job log shows 'Transport request 463 was created in Node QAS_MTA'.  
 ![alt text](azure-pipelines/docs/ctms_joblog.PNG "Title")
 
 QAS_MTA CTMS Node note the Transport Description is made up of the "pipeline name" and the "commit message" and the Owner is the person who made the commit.  
