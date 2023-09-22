@@ -31,14 +31,14 @@ The travel processing application is now in production and is being used by thou
 ![Advanced Pipeline Running](azure-pipelines/docs/advanced-pipeline-running.png)
 
 ## Build
-As mentioned before this repository builds on a copy of the [SAP-samples/cap-sflight](https://github.com/SAP-samples/cap-sflight) application, the repository already has working github actions, inside which is a [node.js.yml](.github/workflows/node.js.yml) which contains a steps i use in the BUILD stage
+As mentioned before this repository builds on a copy of the [SAP-samples/cap-sflight](https://github.com/SAP-samples/cap-sflight) application, the repository already has working github actions, inside which is a [node.js.yml](.github/workflows/node.js.yml) file which contains many of the steps used in the BUILD stage of the advanced pipeline.
 
 ![reuse github actions for Build stage](azure-pipelines/docs/advanced-pipeline-build-reuse.png)
 
 ### Lint
 The lint settings are as provided in the CAP-SFLIGHT sample
 
-I see a lot of code in the wild that doesnt use linting, a bit of a pet hate, when i do a code review the first thing i normally do is check the lint, often the lint will return 1000s of issues, most of them very easy to fix, leaving just errors. Code that isnt linting is often very hard to reason with, that is hard to follow and find issues, abd creates a lot of unnecessary complexity, either the developer is unfamiliar with a language or framework, experimenting as they go, under tight deadlines and told not needed, or often have personal preferences and habits tht differ from the linting rules SAP CAP and or SAPUI5 provide (NIH not-invented-here).
+I see a lot of code in the wild that doesnt use linting, a bit of a pet hate, when i do a code review the first thing i normally do is check the lint results, often if the lint hasnt been run it will return 1000s of issues, most of them very easy to fix warnings, once you remove you are left with just errors. Code that isnt linting is often very hard to reason with, that is hard to follow and find issues, abd creates a lot of unnecessary complexity, either the developer is unfamiliar with a language or framework, experimenting as they go, under tight deadlines and told not needed, or often have personal preferences and habits tht differ from the linting rules SAP CAP and or SAPUI5 provide (NIH not-invented-here).
 
 * linting can improve the code quality and consistency by enforcing a common set of coding standards across the team and company, similar to SAP Code Inspector (SCI/ATC/SLIN etc) in ABAP , set up rules and ensure they adopted before code can be transported
 * linting can reduce the number of errors or bugs by detecting and preventing syntax or logic errors, highlighting potential code smells and or security issues
@@ -55,7 +55,7 @@ With unit tests
 * You can improve the design and structure of your code and make it more readable and maintainable.
 * You get instant feedback and visibility on the test outcomes and code quality metrics.
 
-In the pipeline I used the exising unit tests from the copied application, to get the test results and code coverage to show in the pipeline run summary, I had to make a couple of small changes, I updated the [package.json](package.json) to ignore the wdi5 test files, different runner, and output the test results to the junit format, and for the code coverage gave some settings for acceptable coverage and where to put the coverage results.
+In the pipeline the exising unit tests from the copied application were used, to get the test results and code coverage to show in the azure pipeline run summary,  a couple of small changes were added. In the main [package.json](package.json) to ignore the wdi5 test files from the unit test and to output the unit test results to the junit format, and for the code coverage gave some settings for acceptable coverage and where to put the coverage results, the following changes were made.
 
 ```json
   // File: package.json
@@ -85,7 +85,7 @@ In the pipeline I used the exising unit tests from the copied application, to ge
 
 ```
 
-in the pipeline yaml to [Review test results](https://learn.microsoft.com/en-us/azure/devops/pipelines/test/review-continuous-test-results-after-build?view=azure-devops)  
+In the pipeline yaml to [Review test results](https://learn.microsoft.com/en-us/azure/devops/pipelines/test/review-continuous-test-results-after-build?view=azure-devops)  
 [PublishTestResults@2](https://learn.microsoft.com/en-us/azure/devops/pipelines/tasks/reference/publish-test-results-v2?view=azure-pipelines) - Publish test results v2 task was used.
 
 ```yaml
@@ -130,7 +130,7 @@ With integration tests
 * You can automate the testing process and save time and resources.
 * You can check that your code integrates well with other components and systems and does not cause any conflicts or errors.
 
-In the pipeline i reused the exising OPA5 Karma tests, for both the applications i added the karma-coverage and karma-junit-reporter npm modules to both the applications.
+In the pipeline i reused the exising OPA5 Karma tests, for both the applications i added the karma-coverage and karma-junit-reporter npm modules. To do so is a simple command.
 
 ```cli
 npm install --prefix ./app/travel_processor karma-coverage karma-junit-reporter --save-dev  
@@ -165,8 +165,7 @@ see SAPUI5 [Test Automation](https://sapui5.hana.ondemand.com/#/topic/ae44824382
 **[Back to the Top](#advanced-pipeline)**
 ### Build MTAR
 
-Added the mbt npm package to the project, could easily have added the command in the project. A simple command to use the mta-sqlite.yaml, used the new [@cap-js/sqlite](https://www.npmjs.com/package/@cap-js/sqlite), just didnt want the hassle of turning on and off HANA Cloud instance in the BTP free tier.
-
+To get the project to build in a pipeline i added the mbt npm package to the project, could easily have added the command in the yaml. Below shows a simple command to use the mta-sqlite.yaml as the build file, to avoid the hassle of turning on and off HANA Cloud in Free Tier,  [@cap-js/sqlite](https://www.npmjs.com/package/@cap-js/sqlite)was used instead of HANA.
 
 ```sh
 # package.json
@@ -207,7 +206,7 @@ containers:
 
 ```
 
-Then in the deploy job the vmimage usses the cfcli container and the Cloud Foundry CLI is available to be used in a bash script.
+ Then in the deploy job the vmimage makes use of the cfcli container which provides the Cloud Foundry CLI to perform the cf deploy command.
 
 ```yaml
 # File: azure-pipelines/azure-pipelines-advanced.yml
@@ -244,7 +243,7 @@ see [Add & use variable groups](https://learn.microsoft.com/en-us/azure/devops/p
 
 ### Templates and conditional parameters
 
-In this stage we introduce templates and conditional parameters.
+In this stage and further on we introduce and use templates and conditional parameters.
 Azure DevOps templates are a way of defining reusable content, logic, and parameters in YAML pipelines. They can help you speed up development, secure your pipeline, and avoid repeating the same code in multiple places.
 You can use conditions to specify when a template, a stage, a job, or a step should run or not. Conditions are written as expressions in YAML pipelines.
 
@@ -262,7 +261,7 @@ steps:
 
 ```
 
-This template defines a parameter called runTest that is a boolean value and defaults to false. It also defines two steps that run npm install and npm test commands. The second step only runs if the parameter runTest is true.
+This template defines a parameter called runTest that is a boolean value and defaults to false, if true the step is run, else skipped. It also defines two steps that run npm install and npm test commands. The second step only runs if the parameter runTest is true.
 
 ```yaml
 # File: azure-pipelines.yml

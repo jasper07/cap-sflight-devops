@@ -9,7 +9,9 @@ The purpose of this sample app is to:
 * Demonstrate  techniques to create templates for pipelines to be used across many projects 
 
 This repository is a copy of the https://github.com/SAP-samples/cap-sflight  
-The original [readme](README-sap-sample.md)
+The original [readme](README-sap-sample.md) ourlines all the features and benefits of that repository.
+
+To make it easy to navigate and find all the additional configurations and developments have been put into a the "azure pipelines" folder.
 ```
 CAP-SFLIGHT-DEVOPS  
     ├── azure-pipelines/  
@@ -39,7 +41,9 @@ CAP-SFLIGHT-DEVOPS
     ├── README-simple-pipeline.md  
     └── README-advanced-pipeline.md  
 ```
-![Pipelines](azure-pipelines/docs/pipelines.png)  
+![Pipelines](azure-pipelines/docs/pipelines.png)
+
+The two main pipelines shared are:  
 [Simple Pipeline](README-simple-pipeline.md)
 
 [Advanced Pipeline ](README-advanced-pipeline.md)
