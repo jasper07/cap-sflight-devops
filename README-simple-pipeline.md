@@ -9,7 +9,8 @@ Using a simple build and deploy CI/CD pipeline has many advantages
 3. **Demonstration of Capabilities**: this pipeline primarily focuses on basic build and deploy processes, it showcases the power of automation and its impact on developer productivity.  
 
 
-![Simple Pipeline](azure-pipelines/docs/simple-pipeline.png)
+![Simple Pipeline](azure-pipelines/docs/simple-pipeline.png)  
+[azure-pipelines-simple.yml](azure-pipelines/azure-pipelines-simple.yml)
 
 Once the code is pushed to the main branch of the git the repository, the pipeline is triggered.
 

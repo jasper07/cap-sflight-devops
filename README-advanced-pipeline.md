@@ -26,7 +26,7 @@ The travel processing application is now in production and is being used by thou
 
 ![Advanced Pipeline](azure-pipelines/docs/advanced-pipeline.png)
 
-[azure-pipelines-advanced.yml](azure-pipelines\azure-pipelines-advanced.yml)
+[azure-pipelines-advanced.yml](azure-pipelines/azure-pipelines-advanced.yml)
 
 ![Advanced Pipeline Running](azure-pipelines/docs/advanced-pipeline-running.png)
 

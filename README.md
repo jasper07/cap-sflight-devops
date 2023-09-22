@@ -1,17 +1,17 @@
 #cap sflight devops
-# Welcome to the CAP SFLIGHT Devops example repo
+# Welcome to the CAP SFLIGHT Azure Devops example repo
 
-This repository is intended to be used a reference for how to build Azure Devops Pipelines on top of applications built with the [SAP Cloud Application Programming Model (CAP)](https://cap.cloud.sap).
+This repository is intended to be used a reference for how to create and run Azure Devops Pipelines on top of applications built with the [SAP Cloud Application Programming Model (CAP)](https://cap.cloud.sap).
 
 The purpose of this sample app is to:
-* Demonstrate how CI/CD Improves SAP CAP with Faster Feedback, Quality, Risk, and Collaboration.
-* Demonstrate what is possible to include in a pipeline
-* Demonstrate  techniques to create templates for pipelines to be used across many projects 
+* Demonstrate how CI/CD Improves SAP CAP development with Faster Feedback, Quality, Risk, and Collaboration.
+* Demonstrate what is possible to include in a pipeline.
+* Demonstrate techniques to create templates for pipelines to be used across many projects.
 
 This repository is a copy of the https://github.com/SAP-samples/cap-sflight  
 The original [readme](README-sap-sample.md) ourlines all the features and benefits of that repository.
 
-To make it easy to navigate and find all the additional configurations and developments have been put into a the "azure pipelines" folder.
+To make it easy to navigate and find all the additional configurations and developments they have been put into a the "azure pipelines" folder.
 ```
 CAP-SFLIGHT-DEVOPS  
     ├── azure-pipelines/  
