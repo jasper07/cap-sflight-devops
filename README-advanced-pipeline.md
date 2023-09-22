@@ -39,7 +39,7 @@ As mentioned before this repository builds on a copy of the [SAP-samples/cap-sfl
 ### Lint
 The lint settings are as provided in the CAP-SFLIGHT sample
 
-I see a lot of code in the wild that doesn't use linting, a bit of a pet hate, when I do a code review the first thing I normally do is check the lint results, often if the lint hasn't been run it will return 1000s of issues, most of them very easy to fix warnings, once you remove you are left with just errors. Code that isnt linting is often very hard to reason with, that is hard to follow and find issues, this creates a lot of unnecessary complexity, often it is either the developer is unfamiliar with a language or framework, experimenting as they go, under tight deadlines and told don't do what is not needed, or often the developer(s) have personal preferences and habits that differ from the linting rules SAP CAP and or SAPUI5 provide (NIH not-invented-here).
+I see a lot of code in the wild that doesn't use linting, a bit of a pet hate, when I do a code review the first thing I normally do is check the lint results, often if the lint hasn't been run it will return 1000s of issues, most of them very easy to fix warnings, once you remove you are left with just errors. Code that isn't linting is often very hard to reason with, that is hard to follow and find issues, this creates a lot of unnecessary complexity, often it is either the developer is unfamiliar with a language or framework, experimenting as they go, under tight deadlines and told don't do what is not needed, or often the developer(s) have personal preferences and habits that differ from the linting rules SAP CAP and or SAPUI5 provide (NIH not-invented-here).
 
 * linting can improve the code quality and consistency by enforcing a common set of coding standards across the team and company, similar to SAP Code Inspector (SCI/ATC/SLIN etc) in ABAP, set up rules and ensure they adopted before code can be transported.
 * linting can reduce the number of errors or bugs by detecting and preventing syntax or logic errors, highlighting potential code smells and or security issues.
@@ -138,7 +138,7 @@ npm install --prefix ./app/travel_processor karma-coverage karma-junit-reporter 
 
 ```
 
-To get the output of the tests to be published into the test results and coverage results as mentioned above, in the [karma.conf.js](app/travel_processor/karma.conf.js) the reporters were added and aswell and the results configured to use the same directories as unit tests use. Note there is no custom code in the Fiori apps so no coverage results.
+To get the output of the tests to be published into the test results and coverage results as mentioned above, in the [karma.conf.js](app/travel_processor/karma.conf.js) the reporters were added and as well and the results configured to use the same directories as unit tests use. Note there is no custom code in the Fiori apps so no coverage results.
 
 ```js
 // File: app/travel_processor/karma.conf.js
@@ -358,7 +358,7 @@ Different Types of End-to-End Testing:
 * **Cross-Browser/Compatibility Testing:** This type of testing ensures that your application works consistently across different web browsers and versions. Tools like BrowserStack and Sauce Labs can help with cross-browser testing.
 * **Performance Testing:** Besides load testing, performance testing also includes stress testing, scalability testing, and endurance testing to evaluate the system's performance under different conditions
 
-Below show a couple of examples, UI, Cross-Browser and Performanc Testing.
+Below show a couple of examples, UI, Cross-Browser and Performance Testing.
 
 ### WDI5 BTP Workzone Tests
 [wdi5](https://ui5-community.github.io/wdi5/#/) is designed to run cross-platform end-to-end tests on a UI5 application, with selectors compatible to OPA5.
