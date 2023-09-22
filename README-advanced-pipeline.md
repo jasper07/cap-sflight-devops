@@ -506,12 +506,12 @@ jobs:
 Below you can see the run summary for WDI5 tests running the BTP Workzone Launchpad test across a large number of devices.
 ![browerstack-multiple-devices](azure-pipelines/docs/browerstack-multiple-devices.png)
 
-You can drill down and go directly to the browserstack and see a replay of the individual tests.   
+You can drill down from the pipeline report and go directly to the browserstack and see the detialed result of each run, if you have configured you can see a video replay of the e2e individual tests.   
 ![browerstack-drill-in-report](azure-pipelines/docs/browerstack-drill-in-report.png)
 
 **[Back to the Top](#advanced-pipeline)**
 ### K6 Performance Tests
-This task runs k6 performance tests against the application deployed to the BTP Launchpad.
+This task runs k6 performance tests against the application deployed to the BTP Workzone Standard Launchpad, that way you truly simulate how many users interact with the applicaion.
 
 [k6](https://k6.io/) is a free and open-source testing tool for load and performance testing of APIs, microservices, and websites.
 
