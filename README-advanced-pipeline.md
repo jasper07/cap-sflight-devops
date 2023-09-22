@@ -16,7 +16,7 @@
    - [Upload to CTMS](#upload-to-ctms)
 
 *Hypothetical Scenario*:
-The travel processing application is now in production, it faces frequent periods of high stress and strain as it serves thousands of users who want to book their trips during holidays and special events. The development team knows how vital it is to have a strong and dependable CI/CD pipeline to ensure the application can cope with the varying demand and stay fast and secure.
+The travel processing application is now in production, it faces frequent periods of high stress and strain as it serves thousands of users who want to book their trips during holidays and special events. The development team knows how vital it is to have a strong and dependable CI/CD pipeline to ensure the application can cope with the varying demand and stay fast and secure. The team also has to comply with industry audit and compliance requirements that apply to the software delivery process, such as security scans, dependency management, secret protection, manual approvals, and audit trails. The team also needs to generate and maintain a software bill of materials (SBOM) for the application, which is a list of software components that make up the application, including their origins, versions, licenses, and dependencies. An SBOM helps the team to identify and manage the risks associated with the software supply chain, such as vulnerabilities, license violations, or outdated components.
 
 1. **Quality Assurance**: this pipeline ensures code quality and security, reducing the likelihood of critical issues.
 2. **Comprehensive Testing**: Extensive testing, including integration, security, end-to-end and performance checks, guarantees a robust application.
