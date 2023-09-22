@@ -38,12 +38,12 @@ As mentioned before this repository builds on a copy of the [SAP-samples/cap-sfl
 ### Lint
 The lint settings are as provided in the CAP-SFLIGHT sample
 
-I see a lot of code in the wild that doesnt use linting, a bit of a pet hate, when i do a code review the first thing i normally do is check the lint results, often if the lint hasnt been run it will return 1000s of issues, most of them very easy to fix warnings, once you remove you are left with just errors. Code that isnt linting is often very hard to reason with, that is hard to follow and find issues, this creates a lot of unnecessary complexity, often it is either the developer is unfamiliar with a language or framework, experimenting as they go, under tight deadlines and told don't do what is not needed, or often the developer(s) have personal preferences and habits that differ from the linting rules SAP CAP and or SAPUI5 provide (NIH not-invented-here).
+I see a lot of code in the wild that doesn't use linting, a bit of a pet hate, when I do a code review the first thing I normally do is check the lint results, often if the lint hasn't been run it will return 1000s of issues, most of them very easy to fix warnings, once you remove you are left with just errors. Code that isnt linting is often very hard to reason with, that is hard to follow and find issues, this creates a lot of unnecessary complexity, often it is either the developer is unfamiliar with a language or framework, experimenting as they go, under tight deadlines and told don't do what is not needed, or often the developer(s) have personal preferences and habits that differ from the linting rules SAP CAP and or SAPUI5 provide (NIH not-invented-here).
 
-* linting can improve the code quality and consistency by enforcing a common set of coding standards across the team and company, similar to SAP Code Inspector (SCI/ATC/SLIN etc) in ABAP , set up rules and ensure they adopted before code can be transported
-* linting can reduce the number of errors or bugs by detecting and preventing syntax or logic errors, highlighting potential code smells and or security issues
-* linting enhances the collaboration and communication among developers by providing, clear and concise feedback on changes, it failed cause you used tabs and not spaces
-* including linting in a pipeline can save the time and resources which would other wise be need to review manually.
+* linting can improve the code quality and consistency by enforcing a common set of coding standards across the team and company, similar to SAP Code Inspector (SCI/ATC/SLIN etc) in ABAP, set up rules and ensure they adopted before code can be transported.
+* linting can reduce the number of errors or bugs by detecting and preventing syntax or logic errors, highlighting potential code smells and or security issues.
+* linting enhances the collaboration and communication among developers by providing, clear and concise feedback on changes, it failed cause you used tabs and not spaces.
+* including linting in a pipeline can save the time and resources which would otherwise be need to review manually.
 
 see [CDS Lint & ESLint](https://cap.cloud.sap/docs/tools/#cds-lint).  
 **[Back to the Top](#advanced-pipeline)**
@@ -51,11 +51,11 @@ see [CDS Lint & ESLint](https://cap.cloud.sap/docs/tools/#cds-lint).
 ### Unit Tests
 With unit tests
 
-* You can isolate, and identify and fix bugs easily.
+* You can isolate and identify and fix bugs easily.
 * You can improve the design and structure of your code and make it more readable and maintainable.
 * You get instant feedback and visibility on the test outcomes and code quality metrics.
 
-In the pipeline the exising unit tests from the copied application were used, to get the test results and code coverage to show in the azure pipeline run summary,  a couple of small changes were added. In the main [package.json](package.json) to ignore the wdi5 test files from the unit test and to output the unit test results to the junit format, and for the code coverage gave some settings for acceptable coverage and where to put the coverage results, the following changes were made.
+In the pipeline the existing unit tests from the copied application were used, to get the test results and code coverage to show in the azure pipeline run summary,  a couple of minor changes were added. In the main [package.json](package.json) to ignore the wdi5 test files from the unit test and to output the unit test results to the junit format, and for the code coverage gave some settings for acceptable coverage and where to put the coverage results, the following changes were made.
 
 ```json
   // File: package.json
@@ -130,14 +130,14 @@ With integration tests
 * You can automate the testing process and save time and resources.
 * You can check that your code integrates well with other components and systems and does not cause any conflicts or errors.
 
-In the pipeline i reused the exising OPA5 Karma tests, for both the applications i added the karma-coverage and karma-junit-reporter npm modules. To do so is a simple command.
+In the pipeline I reused the existing OPA5 Karma tests, for both the applications I added the karma-coverage and karma-junit-reporter npm modules. To do so is a simple command.
 
 ```cli
 npm install --prefix ./app/travel_processor karma-coverage karma-junit-reporter --save-dev  
 
 ```
 
-And to get the output of the tests to be published into the test results and coverage results as mentioned above, in the [karma.conf.js](app/travel_processor/karma.conf.js) the reporters neededd to be added and the output to sent to the same directories as unit tests use. Note there is no custom code in the Fiori apps so no coverage results.
+To get the output of the tests to be published into the test results and coverage results as mentioned above, in the [karma.conf.js](app/travel_processor/karma.conf.js) the reporters were added and aswell and the results configured to use the same directories as unit tests use. Note there is no custom code in the Fiori apps so no coverage results.
 
 ```js
 // File: app/travel_processor/karma.conf.js
@@ -165,7 +165,7 @@ see SAPUI5 [Test Automation](https://sapui5.hana.ondemand.com/#/topic/ae44824382
 **[Back to the Top](#advanced-pipeline)**
 ### Build MTAR
 
-To get the project to build in a pipeline i added the mbt npm package to the project, could easily have added the command in the yaml. Below shows a simple command to use the mta-sqlite.yaml as the build file, to avoid the hassle of turning on and off HANA Cloud in Free Tier,  [@cap-js/sqlite](https://www.npmjs.com/package/@cap-js/sqlite)was used instead of HANA.
+To get the project to build in a pipeline I added the mbt npm package to the project, could easily have added the command in the yaml. Below shows a simple command to use the mta-sqlite.yaml as the build file, to avoid the hassle of turning on and off HANA Cloud in Free Tier,  [@cap-js/sqlite](https://www.npmjs.com/package/@cap-js/sqlite)was used instead of HANA.
 
 ```sh
 # package.json
@@ -234,7 +234,7 @@ Note above the use of the **cloudfoundry-variables** variable group.
 
 > Variable groups store values and secrets that you might want to be passed into a YAML pipeline or make available across multiple pipelines. You can share and use variable groups in multiple pipelines in the same project.
 
-A number of variable groups have been created for the different values and secrets needed.
+3 variable groups have been created for the different values and secrets needed in the advanced pipeline.
 
 ![advanced-pipeline-library-variable-groups.png](azure-pipelines/docs/advanced-pipeline-library-variable-groups.png)
 see [Add & use variable groups](https://learn.microsoft.com/en-us/azure/devops/pipelines/library/variable-groups?view=azure-devops&tabs=yaml).   
@@ -363,13 +363,13 @@ Below show a couple of examples, UI, Cross-Browser and Performanc Testing.
 [wdi5](https://ui5-community.github.io/wdi5/#/) is designed to run cross-platform end-to-end tests on a UI5 application, with selectors compatible to OPA5.
 
 * **Automated Testing:** wdi5 test run in a pipeline, ensures that the application works as expected in different environments and devices.    
-* **Early Bug Detection:** By catching bugs and issues early , you can reduce the cost and effort required to fix them compared to finding them in later stages.  
+* **Early Bug Detection:** By catching bugs and issues early, you can reduce the cost and effort required to fix them compared to finding them in later stages.  
 * **Parallel Execution** wdi5 supports parallel test execution, allowing you to run tests concurrently on multiple browser instances, which significantly reduces testing time and speeds up your CI/CD pipeline.  
 
 Some really good instructions for [Using the test library with SAP Build Workzone, standard edition](https://ui5-community.github.io/wdi5/#/fe-testlib?id=using-the-test-library-with-sap-build-workzone-standard-edition) with the latest version of wdi5.
 
 ![wdi5Edge_Chrome.gif](azure-pipelines/docs/WDI5_Workzone_Edge_Chrome.gif)  
-Above shows the wdi5 tests runninng parrallel on both Edge and Chrome.
+Above shows the wdi5 tests running parallel both in Edge and Chrome browsers at same time.
 
 To write wdi5 [test code](azure-pipelines/e2e/webapp/test/e2e/Journey.test.js) is very similar to how you write Opa5 integration test code.
 ```javascript
@@ -441,7 +441,7 @@ Above is the timeline report for the wdi5 can be configured to take screenshots 
 
 **[Back to the Top](#advanced-pipeline)**
 ### Browserstack Tests 
-This job uses BrowserStack to run our WDI5 BTP Workzone tests accross a variety of devices and browsers, eg Iphone, Android, Ipad etc.
+This job uses BrowserStack to run our WDI5 BTP Workzone tests across a variety of devices and browsers, eg iPhone, Android, iPad etc.
 
 * **Cross-Browser and Cross-Platform Testing:** One of the primary advantages of using BrowserStack is its ability to simulate a wide variety of web browsers, browser versions, and operating systems. This ensures that your application works consistently across different browser and platform combinations.   
 * **Device and OS Coverage:** BrowserStack provides access to a vast number of real mobile devices and operating systems, allowing you to test your mobile applications on a wide range of devices. This is particularly valuable for mobile app E2E testing, where device fragmentation can be a challenge.  
@@ -503,15 +503,15 @@ jobs:
           browserstackProduct: "automate"
 ```
 
-Below you can see the run summary for WDI5 tests running the BTP Workzone Launchpad test across a large number of devices.
+Below you can see the Browserstack summary for WDI5 BTP Workzone Launchpad tests being successfully run across a 6 different browsers and devices.
 ![browerstack-multiple-devices](azure-pipelines/docs/browerstack-multiple-devices.png)
 
-You can drill down from the pipeline report and go directly to the browserstack and see the detialed result of each run, if you have configured you can see a video replay of the e2e individual tests.   
+You can drill down from the pipeline report and go directly to the browserstack and see the detailed result of each run, if you have configured you can see a video replay of the e2e individual tests.   
 ![browerstack-drill-in-report](azure-pipelines/docs/browerstack-drill-in-report.png)
 
 **[Back to the Top](#advanced-pipeline)**
 ### K6 Performance Tests
-This task runs k6 performance tests against the application deployed to the BTP Workzone Standard Launchpad, that way you truly simulate how many users interact with the applicaion.
+This task runs k6 performance tests against the application deployed to the BTP Workzone Standard Launchpad, testing this way allows you truly simulate at scale how users would interact with the applicaion under such conditions.
 
 [k6](https://k6.io/) is a free and open-source testing tool for load and performance testing of APIs, microservices, and websites.
 
@@ -521,15 +521,15 @@ Why k6?
 * k6 collects a wide range of performance metrics during testing, including response times, error rates, and resource utilization. These metrics can be used to identify performance issues and ensure that SLAs are being met.
 * k6 allows developers to set thresholds for performance metrics. If a threshold is exceeded during testing, k6 can automatically fail the test, indicating that the SLA has not been met.
 * k6 has integrations with a wide range of tools, including Grafana, InfluxDB, and Jenkins etc. This can make it easier to analyse and visualize test results and integrate into DevOps workflows.
-* k6 has many converters, making it easy to convert existing JMeter, Postman, Swagger/OpenAPI and HAR files into k6 tests
-* k6 is very lightweight which means it can be run from any location, by anyone, very handy for determine location based issues
+* k6 has many converters, making it easy to convert existing JMeter, Postman, Swagger/OpenAPI and HAR files into k6 tests.
+* k6 is very lightweight which means it can be run from any location, by anyone, very handy for determine location based issues.
 
 The following provides comprehensive instructions [Load testing with Azure Pipelines](https://k6.io/blog/integrating-load-testing-with-azure-pipelines/) showing how to create simple k6 tests and run them in an Azure DevOps Pipeline.
 
 To run go to the market place and find the [k6 Load Testing](https://marketplace.visualstudio.com/items?itemName=k6.k6-load-test) extension and get it.
 
 Below is the template used to call the k6 script.  
-**k6-load-test@0** task accepts a filename, in the pipeline it points to [capsflightLaunchpad.js](azure-pipelines/performance/capsflightLaunchpad.js) here the code is set to authenticate a user to use the BTP Launchpad and run load tests for 2 minutes ramping up and down to 10 virtual users. The code performs the creation of a Travel Process request and deletes it, In the code the URL and APPID need to point to your BTP Launchpad and the APPID the html5 repository gives your app.
+**k6-load-test@0** task accepts a filename, in the pipeline it points to [capsflightLaunchpad.js](azure-pipelines/performance/capsflightLaunchpad.js) here the code is set to authenticate a user to use the BTP Launchpad and run load tests for 2 minutes ramping up and down to 10 virtual users, for proper testing adjust the numbers to something more relevant to an enterprise scenario. The code performs the creation of a Travel Process request and deletes it, In the code the URL and APPID need to point to your BTP Launchpad and the APPID the html5 repository gives your app.
 
 ``` yaml
 # File: azure-pipelines/templates/steps/performance-test.yml
@@ -561,8 +561,8 @@ jobs:
 k6 code is very easy to write, below show how simulate the creation of a Travel request calling the BTP Workzone app using HTTP calls only .  
 ![k6 code](azure-pipelines/docs/k6-code.png)  
 
-Below are is the k6 report in Pipeline run results.  
-Note it performed 3684 requests, the fastest being 29.46 miliseconds, maximum was 3.2 seconds, 95% of all calls was an avaerage of 132.70 milliseconds.
+Below is a simple example of how to visulaize the k6 results in Pipeline run results.  For other ways see [Ways to visualize k6 results](https://k6.io/blog/ways-to-visualize-k6-results/).  
+Note in the two minutes the performance test ran, it performed 3684 requests, the fastest being 29.46 miliseconds, maximum was 3.2 seconds, 95% of all calls was an avaerage of 132.70 milliseconds.
 ![k6 Report](azure-pipelines/docs/k6-report.png) 
 
 **[Back to the Top](#advanced-pipeline)**
@@ -571,7 +571,7 @@ Note it performed 3684 requests, the fastest being 29.46 miliseconds, maximum wa
 ### Upload to CTMS
 
 This job allows you to integrate your Azure Devops pipeline with the SAP Cloud Transport Management Service (CTMS).
-It uploads the Multi Target Application archive (mtar) created in the Build stage and then imports it into the tartget CTMS Nodes queue ready for import.
+It uploads the Multi Target Application archive (mtar) created in the Build stage and then imports it into the target CTMS Nodes queue ready for import.
 
 The benefits of including CTMS into your CI/CD pipeline.
 * Enterprise-ready change and release management process
