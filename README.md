@@ -11,7 +11,7 @@ The purpose of this sample app is to:
 This repository is a copy of the https://github.com/SAP-samples/cap-sflight  
 The original [readme](README-sap-sample.md) ourlines all the features and benefits of that repository.
 
-To make it easy to navigate and find all the additional configurations and developments they have been put into a the "azure pipelines" folder.
+To make it easy to navigate and find all the additional configurations and developments they have been put into a the "azure-pipelines" folder.
 ```
 CAP-SFLIGHT-DEVOPS  
     ├── azure-pipelines/  

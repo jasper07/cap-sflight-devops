@@ -283,7 +283,7 @@ See [Template usage reference](https://learn.microsoft.com/en-us/azure/devops/pi
 ### Snyk Security Scan
 Snyk is a popular security platform and tool that specializes in identifying and mitigating security vulnerabilities and issues in software applications and their dependencies. It provides a comprehensive approach to security by focusing on open-source libraries and third-party components, helping organizations proactively manage and remediate vulnerabilities.
 
-Snyk is one of many extensions that are available in the Azure Devops marketplace, easy to sing up for free and get a Snyk Api token needed to integrate a task in your pipeline.
+Snyk is one of many security scan extensions that are available in the Azure Devops marketplace, Snyk is very easy to sign up for free and get running, a Snyk Api token is needed to integrate a task in your pipeline.
 
 Benefits of using such as tool -  
 **Vulnerability Detection**: Identifies security vulnerabilities and issues within your code and dependencies.  
@@ -371,7 +371,7 @@ Some really good instructions for [Using the test library with SAP Build Workzon
 ![wdi5Edge_Chrome.gif](azure-pipelines/docs/WDI5_Workzone_Edge_Chrome.gif)  
 Above shows the wdi5 tests runninng parrallel on both Edge and Chrome.
 
-The [test code](azure-pipelines/e2e/webapp/test/e2e/Journey.test.js) is simple if you worked with Opa5 very familiar.
+To write wdi5 [test code](azure-pipelines/e2e/webapp/test/e2e/Journey.test.js) is very similar to how you write Opa5 integration test code.
 ```javascript
 // File: azure-pipelines/e2e/webapp/test/e2e/Journey.test.js
 it("should create a travel request", async () => {
@@ -397,11 +397,11 @@ it("should create a travel request", async () => {
 To run wdi5 call a script in the [package.json](/azure-pipelines/e2e/package.json), check the file [.env.template](azure-pipelines/e2e/.env.template) for needed environment variables.
 ```json
    "scripts": {
-    "wdi5:headless": "wdio run ./wdio.conf.js --headless",
+    "wdi5:headless": "wdio run ./wdio.conf.js --headless",      
     "wdi5:edge:headless": "wdio run ./wdio.edge.conf.js --headless",
     "wdi5:browserstack": "wdio run ./wdio.browserstack.conf.js"
 ```
-Below is the job template, **PublishHtmlReport@1** publishes the timeline report.
+Below is the job template, **PublishHtmlReport@1** publishes the [wdio-timeline-reporter](https://www.npmjs.com/package/wdio-timeline-reporter).
 ```yaml
 # File: azure-pipelines/templates/steps/wdi5-test.yml
  - name: scriptName
