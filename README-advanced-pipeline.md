@@ -530,7 +530,7 @@ The following provides comprehensive instructions [Load testing with Azure Pipel
 To run go to the market place and find the [k6 Load Testing](https://marketplace.visualstudio.com/items?itemName=k6.k6-load-test) extension and get it.
 
 Below is the template used to call the k6 script.  
-**k6-load-test@0** task accepts a filename, in the pipeline it points to [capsflightLaunchpad.js](azure-pipelines/performance/capsflightLaunchpad.js) here the code is set to authenticate a user to use the BTP Launchpad and run load tests for 2 minutes ramping up and down to 10 virtual users, for proper testing adjust the numbers to something more relevant to an enterprise scenario. The code performs the creation of a Travel Process request and deletes it, In the code the URL and APPID need to point to your BTP Launchpad and the APPID the html5 repository gives your app.
+**k6-load-test@0** task accepts a filename, in the pipeline it points to [capsflightLaunchpad.js](azure-pipelines/performance/capsflightLaunchpad.js) here the code is set to authenticate a user to use the BTP Launchpad and run load tests for 90 seconds ramping up and down to 10 virtual users, for proper testing adjust the numbers to something more relevant to an enterprise scenario. The code performs the creation of a Travel Process request and deletes it, In the code the URL and APPID need to point to your BTP Launchpad and the APPID the html5 repository gives your app.
 
 ``` yaml
 # File: azure-pipelines/templates/steps/performance-test.yml
