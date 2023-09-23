@@ -166,7 +166,7 @@ see SAPUI5 [Test Automation](https://sapui5.hana.ondemand.com/#/topic/ae44824382
 **[Back to the Top](#advanced-pipeline)**
 ### Build MTAR
 
-To get the project to build in a pipeline I added the mbt npm package to the project, could easily have added the command in the yaml. Below shows a simple command to use the mta-sqlite.yaml as the build file, to avoid the hassle of turning on and off HANA Cloud in Free Tier,  [@cap-js/sqlite](https://www.npmjs.com/package/@cap-js/sqlite)was used instead of HANA.
+To get the project to build in a pipeline I added the mbt npm package to the project, could easily have added the command in the yaml. Below shows a simple command to use the mta-sqlite.yaml as the build file, to avoid the hassle of turning on and off HANA Cloud in Free Tier,  [@cap-js/sqlite](https://www.npmjs.com/package/@cap-js/sqlite) was used instead of HANA.
 
 ```sh
 # package.json
