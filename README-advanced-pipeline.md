@@ -562,8 +562,6 @@ jobs:
 k6 code is very easy to write, below shows the code to simulate the creation of a Travel request calling the BTP Workzone app using HTTP calls only .  
 ![k6 code](azure-pipelines/docs/k6-code.png)  
 
-Below is a simple example of how to visulalize the k6 results in the Pipeline run results.  For other ways see [Ways to visualize k6 results](https://k6.io/blog/ways-to-visualize-k6-results/).  
-
 ``` javascript
 export let options = {
     stages: [
@@ -580,7 +578,8 @@ export let options = {
 ``` 
 Above is the setup for the test, 3 stages of 30 seconds, the first stage we ramp up to 10 virtual users, we hold at 10 for 30 seconds and then ramp down for 30 seconds.
 Looking at the report, for the 90 seconds the performance test ran, it s performed 3684 requests, the fastest being 29.46 miliseconds, maximum was 3.2 seconds, 95% of all calls was an avaerage of 132.70 milliseconds. In the thresholds we set the 95% of all calls needed to be less than 500ms which they were so it passed. k6 is very handy for testing the [application-autoscaler](https://discovery-center.cloud.sap/serviceCatalog/application-autoscaler?service_plan=standard&region=all&commercialModel=cloud) settings.
-![k6 Report](azure-pipelines/docs/k6-report.png) 
+![k6 Report](azure-pipelines/docs/k6-report.png)   
+Above shows a simple example of how to visulalize the k6 results in the Pipeline run results.  For other ways see [Ways to visualize k6 results](https://k6.io/blog/ways-to-visualize-k6-results/).  
 
 **[Back to the Top](#advanced-pipeline)**
 ## Upload
